@@ -1,21 +1,36 @@
-function runLoop(){
-    let input = prompt("What is your favourite animal")
-    alert(input.length)
-    alert(input.charAt(1))
-}
+function decToBase(int){
+    let base = parseInt(prompt("Enter Base to Convert to."))
+    let num = prompt("Enter number to convert to specified base.")
+    let numbase = parseInt(prompt("Enter the base of the input"))
+    if(num === 0 || base>36){
+        alert("Error")
+        return
+    }
+    let basenum = ""
 
-function runThing(){
-    let input = prompt("What is your favorite city")
-    let counter = 0
-    while(counter !== input.length){
-        alert(input.charAt(counter))
-        counter++
+    if(int === 1){
+        let pos = 0
+        let newnum2 = 0
+        while (pos<num.length) {
+            newnum2 += (numbase ** pos) * parseInt(num.charAt(pos))
+            pos++
+        }
+        document.getElementById("p").innerHTML = newnum2.toString(base)
+        return;
+    }else {
+        while (base < num) {
+            basenum = (num % base).toString(base) + basenum
+            num -= num % base
+            num = num / base
+        }
+        basenum = num + basenum
+        document.getElementById("p").innerHTML = basenum.toUpperCase()
     }
 }
-function loop2(){
-    document.getElementById("123").innerHTML = ""
-    for(let i = 0; i<300000000000; i++){
-        let rnum = Math.floor(Math.random()*10)
-        document.getElementById("123").innerHTML += rnum
+function fac(){
+    let finalnum = 1
+    for(let i = parseInt(prompt("Enter number")); i>0; i--){
+        finalnum = finalnum * i
     }
+    document.getElementById("p").innerHTML = finalnum.toString().toUpperCase()
 }
