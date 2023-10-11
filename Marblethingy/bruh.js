@@ -1,8 +1,9 @@
-let numMar = 0, isPlayerTurn = true, botwins = 0, playerWins = 0
+let numMar = 0, isPlayerTurn = true, botwins = 0, playerWins = 0, ez = false
 
 function mainLoop() {
+    if(prompt("EZ mode? (y/n)") === "y") ez = true;
     document.getElementById("starter").locked = true
-    numMar = Math.round(Math.random() * 20 + 1)
+    numMar = 20//Math.round(Math.random() * 20 + 1)
     isPlayerTurn = Math.round(Math.random() * 2 + 1) !== 1;
     while (true) {
         if (isPlayerTurn) {
@@ -31,12 +32,16 @@ function mainLoop() {
 
 function playerTurn() {
     alert("There are " + numMar + " marbles. " + displayMar(numMar))
-    let gotIt = true, num
-    while (gotIt) {
-        num = prompt("How many marbles would you like to take?")
-        //TEMP
-        if (num == 1 || num == 2) {
-            gotIt = false
+    let gotIt = false, num, maxTake;
+    while (!gotIt) {
+        if (numMar === 1) {
+            maxTake = numMar
+        }else{
+            maxTake = Math.floor(numMar / 2)
+        }
+        num = prompt("How many marbles would you like to take? Max: " + maxTake)
+        if (maxTake >= Math.floor(num) && Math.floor(num) != 0) {
+            gotIt = true
         } else {
             alert("Invalid NUM")
         }
@@ -45,7 +50,21 @@ function playerTurn() {
 }
 
 function botTurn() {
-    let num = Math.floor(Math.random() * 2 + 1)
+    let num
+    if(ez) {
+         num = Math.floor(Math.random() * (numMar / 2) + 1)
+    }else {
+        let foundP = false, c = 0
+        while(!foundP){
+            if((2 ** c) <= numMar){
+                c++
+            }else{
+                foundP = true
+                c--
+                num =  numMar - ((2 ** c) - 1)
+            }
+        }
+    }
     alert("COM took " + num + " marbles.")
     numMar -= num
 }
