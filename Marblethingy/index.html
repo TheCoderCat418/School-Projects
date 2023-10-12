@@ -4,9 +4,29 @@
     <meta charset="UTF-8">
     <title>How Annoying</title>
     <script src="bruh.js"></script>
+    <link rel="stylesheet" href="sss.css">
 </head>
 <body>
-<h1 id="wins"></h1>
+<!--<h1 class="top" id="wins"></h1>-->
 <button id="starter" onclick="mainLoop()">START</button>
+<div class="sbs" id="game" style="visibility: hidden">
+    <div class="box">
+        <h4 class="marginredu5">Jar 1</h4>
+        <h2 id="1" class="marginredu">15</h2>
+        <button onclick="picked(1)">Pick</button>
+    </div>
+    <div class="spacer"></div>
+    <div class="box">
+        <h4 class="marginredu5">Jar 2</h4>
+        <h2 id="2" class="marginredu">15</h2>
+        <button onclick="picked(2)">Pick</button>
+    </div>
+    <div class="spacer"></div>
+    <div class="box">
+        <h4 class="marginredu5">Jar 3</h4>
+        <h2 id="3" class="marginredu">15</h2>
+        <button onclick="picked(3)">Pick</button>
+    </div>
+</div>
 </body>
 </html>

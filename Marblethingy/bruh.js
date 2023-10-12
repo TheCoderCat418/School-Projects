@@ -2,8 +2,15 @@ let numMar = 0, isPlayerTurn = true, botwins = 0, playerWins = 0, ez = false
 
 function mainLoop() {
     if(prompt("EZ mode? (y/n)") === "y") ez = true;
-    document.getElementById("starter").locked = true
-    numMar = 20//Math.round(Math.random() * 20 + 1)
+    document.getElementById("starter").hidden = true
+    document.getElementById("game").style.visibility = ""
+    genNumbers()//numMar = 20//Math.round(Math.random() * 20 + 1)
+    return;
+
+
+
+
+
     isPlayerTurn = Math.round(Math.random() * 2 + 1) !== 1;
     while (true) {
         if (isPlayerTurn) {
@@ -84,4 +91,9 @@ function displayMar(num) {
 
 function updateWins() {
     document.getElementById("wins").innerHTML = "BOT: " + botwins + " | PLAYER: " + playerWins
+}
+function genNumbers(){
+    document.getElementById("1").innerHTML = Math.round(Math.random() * 20 + 1).toString()
+    document.getElementById("2").innerHTML = Math.round(Math.random() * 20 + 1).toString()
+    document.getElementById("3").innerHTML = Math.round(Math.random() * 20 + 1).toString()
 }
