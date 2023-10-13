@@ -22,7 +22,9 @@ function mainLoop() {
         //document.getElementById(selected.toString()).parentElement.style.backgroundColor = "green"
         document.getElementById("game").style.visibility = "visible"
         document.getElementById("bigPot").style.visibility = "hidden"
+        alert("Doe")
         botTurn()
+        alert("odood")
     }
 
 }
@@ -102,9 +104,10 @@ function picked(potNum) {
 
 
 function botTurn() {
+    alert("Check 1")
     let numInPot = 0, pot = 0
     while(true){
-        if(pot == 4) pot = -1
+        if(pot >= 4) pot = -1
         if(document.getElementById(pot).innerHTML == 1){
             numInPot = 1
             break
@@ -117,7 +120,7 @@ function botTurn() {
         pot++
     }
 
-
+    alert(numInPot)
     let num
     if (ez) {
         num = Math.floor(Math.random() * (numInPot / 2) + 1)
@@ -141,6 +144,7 @@ function botTurn() {
 }
 
 function checkWin() {
+    alert("abc")
     return numMar <= 0;
 }
 
