@@ -68,7 +68,7 @@ function botTurn() {
             }else{
                 foundP = true
                 c--
-                num =  numMar - ((2 ** c) - 1)
+                num =  numMar - (2 ** c)
             }
         }
     }
