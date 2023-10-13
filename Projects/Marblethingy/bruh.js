@@ -1,17 +1,50 @@
 let numMar = 0, isPlayerTurn = true, botwins = 0, playerWins = 0, ez = false
 
 function mainLoop() {
-    if(prompt("EZ mode? (y/n)") === "y") ez = true;
+    if (prompt("EZ mode? (y/n)") === "y") ez = true;
     document.getElementById("starter").hidden = true
-    document.getElementById("game").style.visibility = ""
+    document.getElementById("game").style.visibility = "visible"
     genNumbers()//numMar = 20//Math.round(Math.random() * 20 + 1)
-    return;
-
-
-
-
-
     isPlayerTurn = Math.round(Math.random() * 2 + 1) !== 1;
+    document.getElementById("ranger").oninput = function (event){
+        document.getElementById("bigPotAmu").innerHTML = "You will take " + document.getElementById("ranger").value + " marbles."
+    }
+
+}
+
+function picked(potNum) {
+    if(potNum == 1){
+        document.getElementById("ranger").max = Math.floor(document.getElementById("1").innerHTML / 2)
+        document.getElementById("bigPotText").innerHTML = "Jar 1"
+        document.getElementById("selPotNum").innerHTML = document.getElementById("1").innerHTML
+    }
+    document.getElementById("game").style.visibility = "hidden"
+    document.getElementById("bigPot").style.visibility = "visible"
+
+
+
+
+
+    // let gotIt = false, num, maxTake;
+    // while (!gotIt) {
+    //     if (numMar === 1) {
+    //         maxTake = numMar
+    //     }else{
+    //         maxTake = Math.floor(numMar / 2)
+    //     }
+    //     num = prompt("How many marbles would you like to take? Max: " + maxTake)
+    //     if (maxTake >= Math.floor(num) && Math.floor(num) != 0) {
+    //         gotIt = true
+    //     } else {
+    //         alert("Invalid NUM")
+    //     }
+    // }
+    // numMar -= num
+
+
+
+
+
     while (true) {
         if (isPlayerTurn) {
             playerTurn()
@@ -37,24 +70,7 @@ function mainLoop() {
     document.getElementById("starter").locked = false
 }
 
-function playerTurn() {
-    alert("There are " + numMar + " marbles. " + displayMar(numMar))
-    let gotIt = false, num, maxTake;
-    while (!gotIt) {
-        if (numMar === 1) {
-            maxTake = numMar
-        }else{
-            maxTake = Math.floor(numMar / 2)
-        }
-        num = prompt("How many marbles would you like to take? Max: " + maxTake)
-        if (maxTake >= Math.floor(num) && Math.floor(num) != 0) {
-            gotIt = true
-        } else {
-            alert("Invalid NUM")
-        }
-    }
-    numMar -= num
-}
+
 
 function botTurn() {
     let num

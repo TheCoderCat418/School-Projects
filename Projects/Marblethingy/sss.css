@@ -17,6 +17,11 @@
 .top{
  margin-top: 1px;
 }
+button{
+    font-size: 400%;
+    padding: 10px;
+    font-family: 'Montserrat', sans-serif;
+}
 .marginredu {
     margin-top: 2px;
     margin-bottom: 1px;
@@ -26,6 +31,12 @@
 .marginredu5 {
     margin-top: 2px;
     margin-bottom: 5px;
-
+    font-family: 'Gabarito', sans-serif;
     font-size: 50px;
+}
+.bigArea{
+    height: 100%;
+    text-align: center;
+    background-color: dodgerblue;
+    visibility: collapse;
 }
