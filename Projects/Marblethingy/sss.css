@@ -1,6 +1,10 @@
 .sbs {
     display: flex;
     height: 100%;
+    margin-bottom: 15px;
+}
+body{
+    text-align: center;
 }
 .box{
     width: 33%;
@@ -20,6 +24,7 @@
 button{
     font-size: 400%;
     padding: 10px;
+    align-items: center;
     font-family: 'Montserrat', sans-serif;
 }
 .marginredu {

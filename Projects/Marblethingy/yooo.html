@@ -4,38 +4,40 @@
     <meta charset="UTF-8">
     <title>How Annoying</title>
     <script src="bruh.js"></script>
-    <link rel="stylesheet" href="sss.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Gabarito:wght@600&family=Montserrat:wght@700&display=swap" rel="stylesheet">
+    <link href="sss.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link crossorigin href="https://fonts.gstatic.com" rel="preconnect">
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Gabarito:wght@600&family=Montserrat:wght@700&display=swap"
+          rel="stylesheet">
 </head>
 <body>
-<!--<h1 class="top" id="wins"></h1>-->
+<h1 class="top" id="wins"></h1>
 <button id="starter" onclick="mainLoop()">START</button>
 <div class="sbs" id="game" style="visibility: hidden">
     <div class="box">
         <h4 class="marginredu5">Jar 1</h4>
-        <h2 id="1" class="marginredu">15</h2>
+        <h2 class="marginredu" id="1">15</h2>
         <button id="b1" onclick="picked(1)">Pick</button>
     </div>
     <div class="spacer"></div>
     <div class="box">
         <h4 class="marginredu5">Jar 2</h4>
-        <h2 id="2" class="marginredu">15</h2>
+        <h2 class="marginredu" id="2">15</h2>
         <button id="b2" onclick="picked(2)">Pick</button>
     </div>
     <div class="spacer"></div>
     <div class="box">
         <h4 class="marginredu5">Jar 3</h4>
-        <h2 id="3" class="marginredu">15</h2>
+        <h2 class="marginredu" id="3">15</h2>
         <button id="b3" onclick="picked(3)">Pick</button>
     </div>
 </div>
+<button id="restart" onclick="mainLoop()" style="font-size: 100%;" hidden>Play again!</button>
 <div class="bigArea" id="bigPot">
     <h4 class="marginredu5" id="bigPotText">Jar 3</h4>
-    <h2 id="selPotNum" class="marginredu">15</h2>
-    <label id="bigPotAmu" for="ranger">Enter the amount you would like to take.</label>
-    <input id="ranger" type="range" min=1 max="15">
+    <h2 class="marginredu" id="selPotNum">15</h2>
+    <label for="ranger" id="bigPotAmu">Enter the amount you would like to take.</label>
+    <input id="ranger" max="15" min=1 type="range">
     <input id="sub" type="submit" value="Take">
 </div>
 </body>
