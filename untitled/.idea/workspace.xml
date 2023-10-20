@@ -5,7 +5,20 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="91fc812c-aa50-440b-b5a7-8c833e275837" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/imgs/cbc.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/imgs/elf.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/imgs/ha.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/imgs/inde.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/imgs/mi1.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/imgs/pe.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/imgs/rtrnr.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/imgs/spacecamp.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/imgs/sw.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/imgs/wall-e.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Marblethingy/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Marblethingy/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/script.js" beforeDir="false" afterPath="$PROJECT_DIR$/script.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -19,22 +32,27 @@
   &quot;associatedIndex&quot;: 7
 }</component>
   <component name="ProjectId" id="2VgQe8OcQug97ZFyiojinsFOWRn" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
     "git-widget-placeholder": "main",
     "ignore.virus.scanning.warn.message": "true",
-    "last_opened_file_path": "C:/Users/ellio/JavaProjects/Mics-Projects/Projects/Marblethingy",
+    "last_opened_file_path": "C:/Users/herman7593/Desktop/Github/Mics-Projects/untitled",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -51,10 +69,15 @@
       <workItem from="1697257269713" duration="24000" />
       <workItem from="1697257355979" duration="11000" />
       <workItem from="1697257460860" duration="21000" />
+      <workItem from="1697811131708" duration="1030000" />
+      <workItem from="1697812200878" duration="1718000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
   </component>
 </project>

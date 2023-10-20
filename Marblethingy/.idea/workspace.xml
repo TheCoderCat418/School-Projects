@@ -5,36 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="31738613-5630-4728-aa7a-313424611332" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/Marblethingy.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bruh.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/sss.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../RPS/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../RPS/.idea/RPS.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../RPS/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../RPS/.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../RPS/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../RPS/script.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../loops2/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../loops2/.idea/loops2.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../loops2/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../loops2/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../loops2/loops2.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../untitled/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../untitled/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../untitled/.idea/untitled.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../untitled/.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../untitled/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../untitled/script.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../untitled1/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../untitled1/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../untitled1/.idea/untitled1.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../untitled1/.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../untitled1/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../untitled1/script.js" beforeDir="false" />
+      <change afterPath="$PROJECT_DIR$/../untitled/imgs/spacecamp.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../untitled/imgs/wall-e.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../untitled/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../untitled/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../untitled/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/../untitled/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../untitled/script.js" beforeDir="false" afterPath="$PROJECT_DIR$/../untitled/script.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -72,7 +47,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
     "git-widget-placeholder": "main",
-    "last_opened_file_path": "C:/Users/herman7593/Desktop/Github/Mics-Projects/Projects/Marblethingy",
+    "last_opened_file_path": "C:/Users/herman7593/Desktop/Github/Mics-Projects/untitled",
     "list.type.of.created.stylesheet": "CSS",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -94,6 +69,7 @@
       <workItem from="1697033830051" duration="2385000" />
       <workItem from="1697120467295" duration="2317000" />
       <workItem from="1697206122459" duration="509000" />
+      <workItem from="1697812192320" duration="8000" />
     </task>
     <servers />
   </component>
