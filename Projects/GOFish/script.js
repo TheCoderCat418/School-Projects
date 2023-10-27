@@ -1,5 +1,5 @@
-let pDeck =1;
-
+let pDeck = [], pHand = [], comHand = [];
+let amtToDeal = 5;
 
 
 
@@ -16,12 +16,63 @@ function start(){
            x.push(j);
        }
    }
-    for(let i=0; i<1000000;i++){
+    for(let i=0; i<9999999;i++){
         let rnum = Math.floor(Math.random()*x.length)
         let rnum2 = Math.floor(Math.random()*x.length)
         let char = x[rnum]
         x[rnum] = x[rnum2]
         x[rnum2] = char
     }
-    re
+    pDeck = x;
+    for(let i = 0; i<amtToDeal; i++){
+        pHand.push(pDeck[0]);
+        pDeck.splice(0,1);
+    }
+    for(let i = 0; i<amtToDeal; i++){
+        comHand.push(pDeck[0]);
+        pDeck.splice(0,1);
+    }
+    document.getElementById("deck").innerHTML = pDeck.toString()
+    displayCOMHand()
+    displayPlayerHand()
+    for(let i = 1; i<10;i++){
+            let b = document.createElement("button");
+            b.innerHTML = i.toString();
+
+            b.onclick = function (){
+                playerTurn(this.innerHTML)
+            }
+
+            document.getElementById("pb").appendChild(b);
+        }
 }
+
+function displayPlayerHand(){
+    document.getElementById("player").innerHTML  = pHand.toString()
+    for(let i = 0; i<pHand.length;i++){
+        let b = document.createElement("button");
+        b.innerHTML = pHand[i];
+        b.onclick = function (){
+            playerTurn(this.innerHTML)
+        }
+        b.id = i.toString()
+        document.getElementById("pd").appendChild(b);
+    }
+}
+function displayCOMHand(){
+    document.getElementById("com").innerHTML  = comHand.toString()
+}
+function botTurn(){
+
+}
+function playerMatch(card){
+console.log(id)
+}
+function playerTakeCard(card){
+    console.log(id)
+}
+
+
+
+
+
