@@ -1,4 +1,4 @@
-let pDeck = [], pHand = [], comHand = [];
+let pDeck = [], pHand = [], comHand = [], playerTurn = true;
 let amtToDeal = 5;
 
 
@@ -40,7 +40,11 @@ function start(){
             b.innerHTML = i.toString();
 
             b.onclick = function (){
-                playerTurn(this.innerHTML)
+                if(playerTurn){
+                    playerTurn = false
+                botHasCard(this.innerHTML)
+                  }
+
             }
 
             document.getElementById("pb").appendChild(b);
@@ -49,15 +53,20 @@ function start(){
 
 function displayPlayerHand(){
     document.getElementById("player").innerHTML  = pHand.toString()
+    console.log(document.getElementById("pd").children)
+    console.log(document.getElementById("pd").children.length)
+    while(document.getElementById("pd").children.length > 0){
+        document.getElementById("pd").children[0].remove()
+    }
     for(let i = 0; i<pHand.length;i++){
         let b = document.createElement("button");
         b.innerHTML = pHand[i];
         b.onclick = function (){
-            playerTurn(this.innerHTML)
+            //playerTurn(this.innerHTML)
         }
-        b.id = i.toString()
         document.getElementById("pd").appendChild(b);
     }
+
 }
 function displayCOMHand(){
     document.getElementById("com").innerHTML  = comHand.toString()
@@ -65,11 +74,15 @@ function displayCOMHand(){
 function botTurn(){
 
 }
-function playerMatch(card){
-console.log(id)
-}
-function playerTakeCard(card){
-    console.log(id)
+function botHasCard(card){
+    for(let i = 0; i<comHand.length; i++){
+        if(comHand[i] == card){
+            pHand.push(comHand[i])
+            comHand.splice(i, 1);
+        }
+    }
+    displayCOMHand()
+    displayPlayerHand()
 }
 
 
