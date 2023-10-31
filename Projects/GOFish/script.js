@@ -1,6 +1,6 @@
-let pDeck = [], pHand = [], comHand = [], playerTurn = true, colorer = "off";
+let pDeck = [], pHand = [], comHand = [], playerTurn = true;
 let amtToDeal = 5;
-import * as decor from "./decor"
+
 function init() {
     let x = []
     for (let i = 0; i < 4; i++) {
@@ -56,17 +56,15 @@ function displayPlayerHand() {
         let b = document.createElement("button");
         b.innerHTML = pHand[i];
         b.onclick = function () {
-            //playerTurn(this.innerHTML)
+            matchMaker(this.id)
+
+
         }
         b.id = i.toString() + b.innerHTML
         document.getElementById("pd").appendChild(b);
     }
 
 }
-function playerCheckMatch(){
-decor.blink()
-}
-
 
 
 
@@ -128,4 +126,72 @@ function update(){
     displayCOMHand()
     displayPlayerHand()
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function matchMaker(num1id){
+    if(blinkId!="0") {
+        let num2id = blinkId
+        if (document.getElementById(num2id).innerHTML === document.getElementById(num1id).innerHTML) {
+            blinkId = 0;
+            document.getElementById(num1id).style.backgroundColor = "green"
+            document.getElementById(num2id).style.backgroundColor = "green"
+        }else{
+
+        }
+    }else{
+        blinkId= "0"
+        blink()
+        setTimeout(() => { blinkId = num1id;blink(blinkId) }, 600);
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+let colorer = "off", blinkId="0"
+
+function blink(){
+    if(blinkId=="0"){
+        // for (let i = 0; i<document.getElementById("pd").children.length; i++) {
+        //     document.getElementById("pd").children[i].style.backgroundColor = ""
+        // }
+        return
+    }
+
+    if("off" === colorer){
+        colorer = "BY"
+        document.getElementById(blinkId).style.backgroundColor = "yellow"
+        setTimeout(() => { blink(blinkId) }, 500);
+    }else{
+        colorer = "off"
+        document.getElementById(blinkId).style.backgroundColor = ""
+        setTimeout(() => { blink(blinkId) }, 500);
+    }
+
+
+}
+
+
 
