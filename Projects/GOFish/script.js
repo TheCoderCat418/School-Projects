@@ -1,4 +1,4 @@
-let pDeck = [], pHand = [], comHand = [], playerTurn = true;
+let pDeck = [], pHand = [], comHand = [], playerTurn = true, playerPoints = 0, comPoints = 0;
 let amtToDeal = 5;
 
 function init() {
@@ -37,8 +37,8 @@ function init() {
                 } else {
                     playerTakeFromDeck()
                 }
+                endPlayerTurn(true)
                 botTurn()
-                playerTurn = true
             }
 
         }
@@ -78,10 +78,11 @@ function displayCOMHand() {
 function botTurn() {
     let cNum = Math.floor(Math.random()*comHand.length)
     if(playerHasCard(comHand[cNum])){
-botTakePlayerCard(comHand[cNum])
+        botTakePlayerCard(comHand[cNum])
     }else{
         COMTakeFromDeck();
     }
+    endPlayerTurn(false)
 }
 
 function botHasCard(card) {
@@ -125,42 +126,91 @@ function update(){
     document.getElementById("deck").innerHTML = pDeck.toString()
     displayCOMHand()
     displayPlayerHand()
+    for (let i = 0; i<document.getElementById("pd").children.length; i++) {
+        document.getElementById("pd").children[i].style.backgroundColor = ""
+    }
+    blinkId= "0"
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-function matchMaker(num1id){
-    if(blinkId!="0") {
-        let num2id = blinkId
-        if (document.getElementById(num2id).innerHTML === document.getElementById(num1id).innerHTML) {
-            blinkId = 0;
-            document.getElementById(num1id).style.backgroundColor = "green"
-            document.getElementById(num2id).style.backgroundColor = "green"
-        }else{
-
-        }
-    }else{
-        blinkId= "0"
-        blink()
-        setTimeout(() => { blinkId = num1id;blink(blinkId) }, 600);
+function botFindAndClearLinks(){
+    for(let i= 0; i<comHand.length; i++){
+        for(let j = 0; j<comHand.length;j++)
+            if(comHand[i] === comHand[j]){
+                pHand.splice(i, 1)
+                pHand.splice(j, 1);
+                comPoints++
+            }
     }
 }
 
 
 
+
+
+
+
+let noPlayerInput = false;
+
+
+function endPlayerTurn(end){
+    update()
+    for(let i =0; i<document.getElementById("pb").children.length;i++){
+        document.getElementById("pb").children[i].disabled = end
+    }
+    for(let i =0; i<document.getElementById("pd").children.length;i++){
+        document.getElementById("pd").children[i].disabled = end
+    }
+    // document.getElementById("doner").disabled = end
+}
+
+
+
+function matchMaker(num1id) {
+    if (!noPlayerInput) {
+        if (blinkId != "0") {
+            let num2id = blinkId
+            if (document.getElementById(num2id).innerHTML === document.getElementById(num1id).innerHTML && document.getElementById(num2id).id !== document.getElementById(num1id).id) {
+                blinkId = 0;
+                noPlayerInput = true;
+                setTimeout(() => {
+                    noPlayerInput = false;
+                    update()
+                }, 1000);
+                document.getElementById(num1id).style.backgroundColor = "green"
+                document.getElementById(num2id).style.backgroundColor = "green"
+                pHand.splice(pHand.indexOf(document.getElementById(num1id).innerHTML), 1)
+                pHand.splice(pHand.indexOf(document.getElementById(num2id).innerHTML), 1)
+                playerPoints++
+
+            } else {
+                blinkId = 0;
+                noPlayerInput = true;
+                document.getElementById(num1id).style.backgroundColor = "red"
+                document.getElementById(num2id).style.backgroundColor = "red"
+                setTimeout(() => {
+                    noPlayerInput = false;
+                    document.getElementById(num1id).style.backgroundColor = "";
+                    document.getElementById(num2id).style.backgroundColor = "";
+                    update()
+                }, 1000);
+
+            }
+        } else {
+
+                blinkId = num1id;
+                blink(blinkId)
+        }
+    }
+}
+
+
+function checkForEndGame(isPlayer){
+    if(pDeck.length === 0){
+
+    }else if(pHand.length === 0){
+
+    }else id(comHand.length === 0)
+}
 
 
 
@@ -175,7 +225,7 @@ let colorer = "off", blinkId="0"
 function blink(){
     if(blinkId=="0"){
         // for (let i = 0; i<document.getElementById("pd").children.length; i++) {
-        //     document.getElementById("pd").children[i].style.backgroundColor = ""
+        //      document.getElementById("pd").children[i].style.backgroundColor = ""
         // }
         return
     }
