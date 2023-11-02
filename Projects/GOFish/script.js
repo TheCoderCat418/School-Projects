@@ -30,8 +30,8 @@ function init() {
         b.innerHTML = i.toString();
 
         b.onclick = function () {
-            if (playerTurn) {
-                playerTurn = false
+            // if (playerTurn) {
+            //     playerTurn = false
                 if (botHasCard(this.innerHTML)) {
                     playerTakeBotCard(this.innerHTML)
                 } else {
@@ -41,7 +41,7 @@ function init() {
                 botTurn()
             }
 
-        }
+        // }
 
         document.getElementById("pb").appendChild(b);
     }
@@ -76,13 +76,16 @@ function displayCOMHand() {
 }
 
 function botTurn() {
-    let cNum = Math.floor(Math.random()*comHand.length)
-    if(playerHasCard(comHand[cNum])){
-        botTakePlayerCard(comHand[cNum])
-    }else{
-        COMTakeFromDeck();
+    botFindAndClearLinks()
+    if(!checkEndGame("b")){
+        let cNum = Math.floor(Math.random() * comHand.length)
+        if (playerHasCard(comHand[cNum])) {
+            botTakePlayerCard(comHand[cNum])
+        } else {
+            COMTakeFromDeck();
+        }
+        endPlayerTurn(false)
     }
-    endPlayerTurn(false)
 }
 
 function botHasCard(card) {
@@ -112,15 +115,19 @@ let i = pHand.indexOf(card)
 }
 
 function playerTakeFromDeck() {
-    pHand.push(pDeck[0])
-    pDeck.splice(0, 1);
-    update()
+    if(!checkEndGame("d")) {
+        pHand.push(pDeck[0])
+        pDeck.splice(0, 1);
+        update()
+    }
 }
 
 function COMTakeFromDeck() {
-    comHand.push(pDeck[0])
-    pDeck.splice(0, 1);
-    update()
+    if(!checkEndGame("d")) {
+        comHand.push(pDeck[0])
+        pDeck.splice(0, 1);
+        update()
+    }
 }
 function update(){
     document.getElementById("deck").innerHTML = pDeck.toString()
@@ -133,17 +140,34 @@ function update(){
 }
 
 function botFindAndClearLinks(){
-    for(let i= 0; i<comHand.length; i++){
-        for(let j = 0; j<comHand.length;j++)
-            if(comHand[i] === comHand[j]){
-                pHand.splice(i, 1)
-                pHand.splice(j, 1);
-                comPoints++
+        for (let i = 0; i < comHand.length; i++) {
+            for (let j = 0; j < comHand.length; j++) {
+                if (comHand[i] === comHand[j] && i !== j) {
+                    let num = comHand[i]
+                    comHand.splice(comHand.indexOf(num), 1)
+                    comHand.splice(comHand.indexOf(num), 1);
+                    comPoints++
+                    i = -1
+                    j = -1
+                }
             }
-    }
+        }
+
 }
 
-
+function checkEndGame(way){
+    if(pHand.length === 0){
+        alert("Player Wins!")
+        return true;
+    }else if(comHand.length === 0){
+        alert("COM Wins!")
+        return true;
+    }else if(pDeck.length === 0){
+        alert("Tie!")
+        return true;
+    }
+    return false
+}
 
 
 
@@ -181,6 +205,7 @@ function matchMaker(num1id) {
                 pHand.splice(pHand.indexOf(document.getElementById(num1id).innerHTML), 1)
                 pHand.splice(pHand.indexOf(document.getElementById(num2id).innerHTML), 1)
                 playerPoints++
+                checkEndGame("p")
 
             } else {
                 blinkId = 0;
