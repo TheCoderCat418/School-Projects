@@ -19,10 +19,13 @@ function drawRecked(){
         ctx.arc(10 * i, 500, 100, 0, 7) // circle
         ctx.fill()
     }
+    ctx.fillStyle = "rgb(55,130,255)"
+    ctx.fillRect(250, 250, 100, 100)
 
-//ctx.font = "50px Ariel"
-    //ctx.fillText("uuyuyf", 10, 250)
+    ctx.fillStyle = "rgb(121,8,8)"
+ctx.font = "50px Ariel"
+    ctx.fillText("624", 150, 300)
     //ctx.stroke();
 
-    //ctx.drawImage(pig, 1, 1, 50, 50)
+    ctx.drawImage(pig, 275, 300, 50, 50)
 }
