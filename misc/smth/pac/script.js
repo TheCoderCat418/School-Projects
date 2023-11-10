@@ -24,20 +24,30 @@ function inti(){
         }
         clear()
         spawn()
+        checkColl()
         draw()
     })
 }
-let rx = Math.floor(Math.random()*2100), ry = Math.floor(Math.random()*900)
+let rx = 50 //Math.floor(Math.random()*2100), ry = Math.floor(Math.random()*900)
+let ry = 50
 function spawn(){
     let ctx = document.getElementById("caned").getContext("2d")
     let coin = new Image()
     coin .src = "r/currency-coin-cartoon-png.png"
     ctx.drawImage(coin, rx,ry ,100,100)
 }
+function checkColl(){
+    if(charx+100>rx-25&&rx+75>charx){
+        if(chary<ry+100&&chary+100>ry-30){
+            rx = Math.floor(Math.random()*2100)
+            ry = Math.floor(Math.random()*900)
+        }
+    }
+}
 
 function draw(){
     let ctx = document.getElementById("caned").getContext("2d")
-    ctx.drawImage(ing, charx,chary,200,200)
+    ctx.drawImage(ing, charx,chary,150,150)
 }
 
 let charx = 100 , chary = 100
