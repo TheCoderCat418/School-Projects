@@ -33,7 +33,7 @@ let ry = 50
 function spawn(){
     let ctx = document.getElementById("caned").getContext("2d")
     let coin = new Image()
-    coin .src = "r/currency-coin-cartoon-png.png"
+    coin.src = "r/currency-coin-cartoon-png.png"
     ctx.drawImage(coin, rx,ry ,100,100)
 }
 function checkColl(){
