@@ -1,5 +1,5 @@
-let a;
-let bask, apples = []
+let a,spwanTime=500;
+let bask, apples = [], appscollected = 1
 
 function startAnimation(){
     animate()
@@ -15,6 +15,12 @@ function animate() {
     drawBasket()
     moveApple()
     drawApple()
+    console.log(spwanTime, appscollected, spwanTime/2-(appscollected/2))
+    for(let i = 0; i<apples.length;i++){
+        if(checkCollisionsOfBasket(i)){
+            i=0
+        }
+    }
 }
 
 function initialize(){
@@ -47,22 +53,21 @@ function createBasket(){
     bask = createImage("resources/basket.png", 250, 425, 0)
 }
 function makeApple(){
-    apples[apples.length] = createImage("resources/apple.png",Math.floor(Math.random()*450-25), -50, 0.5)
+    apples[apples.length] = createImage("resources/apple.png",Math.floor(Math.random()*500), -50, 0.5)
     setTimeout(()=>{
         makeApple()
-    }, 1)
+    }, 0.00001)
 }
 function moveApple(){
     for(let i = 0; i<apples.length; i++){
         apples[i].top+=apples[i].velo;
-        console.log(apples[i].top)
     }
 }
 function drawApple(){
     for(let i = 0; i<apples.length; i++){
         let ctx = document.getElementById("myCanvas").getContext("2d");
-        ctx.drawImage(apples[i], apples[i].left, apples[i].top, 100, 100)
-        if(apples[i].top > 400){
+        ctx.drawImage(apples[i], apples[i].left, apples[i].top, 20, 20)
+        if(apples[i].top > 500){
             apples.splice(i,1);
         }
     }
@@ -103,3 +108,12 @@ $(document).keydown((event) => {  //jQuery code to recognize a keydown event
     }
 
 });
+
+function checkCollisionsOfBasket(i){
+    if(apples[i].left+20>bask.left && apples[i].left<bask.left+50 && bask.top-20 < apples[i].top && bask.top+50>apples[i].top){
+        apples.splice(i, 1);
+        appscollected++
+        return true
+    }
+    return false;
+}
