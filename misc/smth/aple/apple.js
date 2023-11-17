@@ -1,5 +1,5 @@
 let a,spwanTime=500;
-let bask, apples = [], appscollected = 1
+let bask, apples = [], appscollected = 0, famps=0
 
 function startAnimation(){
     animate()
@@ -21,8 +21,16 @@ function animate() {
             i=0
         }
     }
+    if(famps === 5) {
+        endGame()
+    }
 }
-
+let aaa= 3
+function endGame(){
+    stopAnimation()
+    let ctx = document.getElementById("myCanvas").getContext("2d");
+    ctx.drawImage(createImage("resources/aznrmij72wu4ma9mcads.jpg"), 0,0,500,500)
+}
 function initialize(){
     drawBackground()
     drawTree()
@@ -56,7 +64,7 @@ function makeApple(){
     apples[apples.length] = createImage("resources/apple.png",Math.floor(Math.random()*500), -50, 0.5)
     setTimeout(()=>{
         makeApple()
-    }, 0.00001)
+    }, 500)
 }
 function moveApple(){
     for(let i = 0; i<apples.length; i++){
@@ -69,6 +77,7 @@ function drawApple(){
         ctx.drawImage(apples[i], apples[i].left, apples[i].top, 20, 20)
         if(apples[i].top > 500){
             apples.splice(i,1);
+            famps++
         }
     }
 }
