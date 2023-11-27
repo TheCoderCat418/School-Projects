@@ -20,7 +20,7 @@ function animate() {
         drawBullet()
         console.log(spwanTime, appscollected, spwanTime / 2 - (appscollected / 2))
         for (let i = 0; i < apples.length; i++) {
-            if (checkCollisionsOfBasket(i)) {
+            if (checkCollisionsOfBasket(i) || checkCollisionsOfBullet(i)) {
                 i = 0
             }
         }
@@ -43,6 +43,7 @@ function initialize(){
     createBasket()
     makeApple()
     createHearts()
+    createBuller()
 }
 
 let tree = new Image()
@@ -63,12 +64,14 @@ function createBuller(){
     bullit = createImage("resources/Untitled.jpg", bask.left, 500, -10)
 }
 function drawBullet(){
-    bullit.top += bullit.velo
-    let ctx = document.getElementById("myCanvas").getContext("2d");
-    ctx.drawImage(bullit, bullit.left, bullit.top, 50, 50)
-    if(bullit.top < -50){
-        bullit = null
-        canFire =true
+    if(canFire == false) {
+        bullit.top += bullit.velo
+        let ctx = document.getElementById("myCanvas").getContext("2d");
+        ctx.drawImage(bullit, bullit.left, bullit.top, 50, 50)
+        if (bullit.top < -50) {
+            bullit = createImage("resources/Untitled.jpg", bask.left, 500, -10)
+            canFire = true
+        }
     }
 }
 function drawBasket(){
@@ -95,10 +98,10 @@ function drawHears(){
 
 }
 function makeApple(){
-    apples[apples.length] = createImage("resources/apple.png",Math.floor(Math.random()*500), -50, 0.5)
+    apples[apples.length] = createImage("resources/apple.png",Math.floor(Math.random()*500), -50, Math.random()*3+1)
     setTimeout(()=>{
         makeApple()
-    }, 1000)
+    }, spwanTime*4-(appscollected*3))
 }
 function moveApple(){
     for(let i = 0; i<apples.length; i++){
@@ -163,6 +166,16 @@ function checkCollisionsOfBasket(i){
     if(apples[i].left+20>bask.left && apples[i].left<bask.left+50 && bask.top-20 < apples[i].top && bask.top+50>apples[i].top){
         apples.splice(i, 1);
         appscollected++
+        return true
+    }
+    return false;
+}
+function checkCollisionsOfBullet(i){
+    if(apples[i].left+20>bullit.left && apples[i].left<bullit.left+50 && bullit.top-20 < apples[i].top && bullit.top+50>apples[i].top){
+        apples.splice(i, 1);
+        appscollected++
+        bullit = createImage("resources/Untitled.jpg", bask.left, 500, -10)
+        canFire = true
         return true
     }
     return false;
