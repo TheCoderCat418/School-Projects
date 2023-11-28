@@ -112,6 +112,7 @@ function drawApple(){
     for(let i = 0; i<apples.length; i++){
         let ctx = document.getElementById("myCanvas").getContext("2d");
         ctx.drawImage(apples[i], apples[i].left, apples[i].top, 20, 20)
+        ctx.
         if(apples[i].top > 500){
             apples.splice(i,1);
             famps++
