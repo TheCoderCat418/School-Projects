@@ -1,9 +1,10 @@
-let animationFrame, canvas, player, evilShips = [], movingUp = false, goodLazer
-
+let animationFrame, canvas, player, evilShips = [], movingUp = false
+let goodLazer
 
 function init() {
     canvas = document.getElementById("caned").getContext("2d")
     player = createImage("rec/The_Red_One.png", 0, 375, 150, 75)
+    goodLazer  = createImage("rec/LaysBeam.png", 0, 0, 100, 10, 5, false)
     makeEnimies()
     animateLoop()
 }
@@ -14,7 +15,8 @@ function animateLoop() {
     drawCharacter()
     moveEnemies()
     drawEnemies()
-
+    goodLaserCheckCollisions()
+drawGoodLaser()
 }
 
 function drawBackground() {
@@ -58,12 +60,35 @@ function makeEnimies() {
     for (let j = 0; j < 2; j++) {
         evilShips[j] = []
         for (let i = 0; i < 5; i++) { //OFFSET + NUMINROW * (SIZE + PADDING)
-            evilShips[j][i] = createImage("rec/Police_Cruiser.png", 1000 + j * (150 + 50), 50 + i * (75 + 50), 150, 75, 2)
+            evilShips[j][i] = createImage("rec/Police_Cruiser.png", 1000 + j * (150 + 50), 50 + i * (75 + 50), 150, 75, 2 )
         }
     }
 }
-function shootGoodLaser(){
 
+function drawGoodLaser(){
+    if(goodLazer.visi){
+        goodLazer.xval += goodLazer.velo
+        canvas.drawImage(goodLazer, goodLazer.xval, goodLazer.yval, goodLazer.sizex, goodLazer.sizey)
+    }
+}
+function goodLaserCheckCollisions(){
+    for(let i = 0; i<evilShips.length; i++){
+        for(let j = 0; j<evilShips[i].length; j++){
+            if(goodLazer.xval + goodLazer.sizex > evilShips[i][j].xval){
+                if(goodLazer.xval < evilShips[i][j].xval + evilShips[i][j].sizex){
+                    if(goodLazer.yval + goodLazer.sizey > evilShips[i][j].yval){
+                        if(evilShips[i][j].yval + evilShips[i][j].sizey > goodLazer.yval){
+                            evilShips[i].splice(j, 1);
+                            goodLazer.yval = 0
+                            goodLazer.xval = 0
+                            goodLazer.visi = false
+                            return
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
 let createImage = function (src, xcoord, ycoord, sizex, sizey, velo, visi) {
     let img = new Image()
@@ -98,7 +123,9 @@ $(document).keydown((event) => {
     console.log(keycode)
 
     if (keycode == 32) {
-
+        goodLazer.xval = player.xval
+        goodLazer.yval = player.yval
+        goodLazer.visi = true
     }
 
 });
