@@ -2,7 +2,7 @@ let animationFrame, canvas, player, evilShips = [], movingUp = false
 let goodLazer, score = 0
 let evilLasers = []
 let laserInMotion = false
-
+let playerLives = 3
 
 
 
@@ -18,6 +18,15 @@ function init() {
 
     makeEnimies()
     animateLoop()
+    for(let i = 0; i<evilShips.length; i++){
+        for(let j = 0; j<evilShips[i].length;j++){
+            setTimeout(() => {
+                createEvilLaser([i,j])
+            }, Math.random() * 9999)
+
+        }
+    }
+
 }
 
 function animateLoop() {
@@ -29,6 +38,11 @@ function animateLoop() {
     goodLaserCheckCollisions()
     drawGoodLaser()
     drawScore()
+    moveEvilLasers()
+    checkbadLasersCollision()
+    if(playerLives <= 0){
+        cancelAnimationFrame(animationFrame)
+    }
 }
 
 function drawBackground() {
@@ -87,13 +101,26 @@ function drawEnemies() {
     }
 }
 
-function createEvilLaser(shipRelate){
-    if(shipRelate !== null){
-        
+function createEvilLaser(pos){
+    if(evilShips[pos[0]][pos[1]] !== null){
+        evilLasers.push(createImage("rec/Laser-Beam-PNG-HD-Image.png", evilShips[pos[0]][pos[1]].xval,  evilShips[pos[0]][pos[1]].yval, 100, 50, 5))
+        setTimeout(() => {
+            createEvilLaser(pos)
+        }, Math.random() * 9999 +  5000)
     }
 }
 
+function moveEvilLasers(){
+    for(let i = 0; i<evilLasers.length; i++){
+        evilLasers[i].xval -= evilLasers[i].velo
+        canvas.drawImage(evilLasers[i], evilLasers[i].xval, evilLasers[i].yval, evilLasers[i].sizex, evilLasers[i].sizey)
 
+        if(evilLasers[i].xval < -evilLasers[i].sizex){
+            evilLasers.splice(i, 1)
+            i--
+        }
+    }
+}
 
 
 
@@ -152,6 +179,22 @@ function goodLaserCheckCollisions() {
         }
     }
 }
+
+function checkbadLasersCollision(){
+    for(let i = 0; i<evilLasers.length; i++){
+        let s = evilLasers[i]
+        if(player.xval + player.sizex > s.xval){
+            if(player.yval< s.yval + s.sizey) {
+                if(player.yval + player.sizey > s.yval) {
+                    playerLives--
+                    evilLasers.splice(i, 1)
+                    i--
+                }
+            }
+        }
+    }
+}
+
 
 let createImage = function (src, xcoord, ycoord, sizex, sizey, velo, visi) {
     let img = new Image()
