@@ -22,7 +22,7 @@ function init() {
         for(let j = 0; j<evilShips[i].length;j++){
             setTimeout(() => {
                 createEvilLaser([i,j])
-            }, Math.random() * 9999)
+            }, Math.random() * 9999 + 3000)
 
         }
     }
@@ -38,15 +38,16 @@ function animateLoop() {
     goodLaserCheckCollisions()
     drawGoodLaser()
     drawScore()
+    displayHealth()
     moveEvilLasers()
     checkbadLasersCollision()
     if(playerLives <= 0){
-        cancelAnimationFrame(animationFrame)
+        location.reload()
     }
 }
 
 function drawBackground() {
-    canvas.fillStyle = "#2d0470"
+    canvas.fillStyle = "#18003f"
     canvas.fillRect(0, 0, 2000, 1250)
 }
 
@@ -54,7 +55,11 @@ function drawCharacter() {
 
     canvas.drawImage(player, player.xval, player.yval, player.sizex, player.sizey)
 }
-
+function displayHealth(){
+    for(let i = 0; i<playerLives; i++) {
+        canvas.drawImage(createImage("rec/heart-png-38780.png"), 400 + i * (50 + 25), 10, 50, 50)
+    }
+}
 function moveEnemies() {
 
     let bottom = [0, 0]
