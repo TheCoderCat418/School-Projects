@@ -3,7 +3,7 @@ let goodLazer, score = 0
 let evilLasers = []
 let laserInMotion = false
 let playerLives = 3
-
+let powerups = []
 
 
 
@@ -15,7 +15,9 @@ function init() {
     canvas = document.getElementById("caned").getContext("2d")
     player = createImage("rec/The_Red_One.png", 0, 375, 150, 75)
     goodLazer = createImage("rec/LaysBeam.png", 0, 0, 100, 10, 5, false)
-
+    setTimeout(() => {
+        makePowerUp()
+    }, 10000)
     makeEnimies()
     animateLoop()
     for(let i = 0; i<evilShips.length; i++){
@@ -35,12 +37,14 @@ function animateLoop() {
     drawCharacter()
     moveEnemies()
     drawEnemies()
+    movePowerUps()
     goodLaserCheckCollisions()
     drawGoodLaser()
     drawScore()
     displayHealth()
     moveEvilLasers()
     checkbadLasersCollision()
+
     if(playerLives <= 0){
         location.reload()
     }
@@ -50,7 +54,33 @@ function drawBackground() {
     canvas.fillStyle = "#18003f"
     canvas.fillRect(0, 0, 2000, 1250)
 }
+function makePowerUp(){
+    let p = createImage("rec/heart-png-38780.png", 1250, Math.random() * 700, 50,50, 2)
+    powerups.push(p);
+    let t = 5000
+    if(playerLives > 4){
+        t += 7500;
+    }
+    setTimeout(() => {
+        makePowerUp()
+    }, Math.random() * 7500 + t)
+}
+function movePowerUps(){
+    for(let i = 0; i<powerups.length; i++){
+        if(player.xval + player.sizex > powerups[i].xval){
+            if(player.yval< powerups[i].yval + powerups[i].sizey) {
+                if(player.yval + player.sizey > powerups[i].yval) {
+                    playerLives++
+                    powerups.splice(i, 1)
+                    i--
+                }
+            }
+        }
+        powerups[i].xval -= powerups[i].velo
+        canvas.drawImage(powerups[i], powerups[i].xval, powerups[i].yval, powerups[i].sizex, powerups[i].sizey);
+    }
 
+}
 function drawCharacter() {
 
     canvas.drawImage(player, player.xval, player.yval, player.sizex, player.sizey)
