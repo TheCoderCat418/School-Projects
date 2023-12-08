@@ -55,10 +55,16 @@ function drawBackground() {
     canvas.fillRect(0, 0, 2000, 1250)
 }
 function makePowerUp(){
-    let p = createImage("rec/heart-png-38780.png", 1250, Math.random() * 700, 50,50, 2)
+    let rnum = Math.floor(Math.random() * 2), p
+    if(rnum == 0){
+         p = createImage("rec/Uranium_Fuel_Rod.png", 1250, Math.random() * 700, 50,50, 2, true, "speed")
+    }else{
+         p = createImage("rec/heart-png-38780.png", 1250, Math.random() * 700, 50,50, 2, true, "heal")
+    }
+
     powerups.push(p);
     let t = 5000
-    if(playerLives > 4){
+    if(playerLives > 3){
         t += 7500;
     }
     setTimeout(() => {
@@ -70,7 +76,14 @@ function movePowerUps(){
         if(player.xval + player.sizex > powerups[i].xval){
             if(player.yval< powerups[i].yval + powerups[i].sizey) {
                 if(player.yval + player.sizey > powerups[i].yval) {
-                    playerLives++
+                    if(powerups[i].type === "heal") {
+                        playerLives++
+                    }else if(powerups[i].type === "speed"){
+                        goodLazer.velo += 10
+                        setTimeout(() => {
+                            goodLazer.velo -= 10
+                        }, 6000)
+                    }
                     powerups.splice(i, 1)
                     i--
                 }
@@ -92,7 +105,7 @@ function displayHealth(){
 }
 function moveEnemies() {
 
-    let bottom = [0, 0]
+    let bottom = [1, -1]
     for (let j = 0; j < evilShips.length; j++) {
         for (let i = 0; i < evilShips[j].length; i++) {
             if (evilShips[j][i] !== null && i > bottom[1]) {
@@ -100,7 +113,7 @@ function moveEnemies() {
             }
         }
     }
-    let top = [0, 4]
+    let top = [-1, 4]
     for (let j = 0; j < evilShips.length; j++) {
         for (let i = 0; i < evilShips[j].length; i++) {
             if (evilShips[j][i] !== null && i < top[1]) {
@@ -108,6 +121,7 @@ function moveEnemies() {
             }
         }
     }
+    console.log(top, bottom)
     if (evilShips[bottom[0]][bottom[1]].yval + evilShips[bottom[0]][bottom[1]].sizey > 750) {
         movingUp = true
     } else if (evilShips[top[0]][top[1]].yval < 0) {
@@ -231,7 +245,7 @@ function checkbadLasersCollision(){
 }
 
 
-let createImage = function (src, xcoord, ycoord, sizex, sizey, velo, visi) {
+let createImage = function (src, xcoord, ycoord, sizex, sizey, velo, visi, type) {
     let img = new Image()
     img.src = src;
     img.xval = xcoord;
@@ -240,7 +254,7 @@ let createImage = function (src, xcoord, ycoord, sizex, sizey, velo, visi) {
     img.visi = visi;
     img.sizex = sizex
     img.sizey = sizey
-
+    img.type = type
     return img;
 }
 
