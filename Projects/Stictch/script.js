@@ -30,7 +30,6 @@ function init() {
     }
 
 }
-
 function animateLoop() {
     animationFrame = requestAnimationFrame(animateLoop);
     drawBackground()
