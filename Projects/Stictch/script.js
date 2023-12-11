@@ -4,12 +4,7 @@ let evilLasers = []
 let laserInMotion = false
 let playerLives = 3
 let powerups = []
-
-
-
-
-
-
+let bunker = []
 
 function init() {
     canvas = document.getElementById("caned").getContext("2d")
@@ -19,32 +14,37 @@ function init() {
         makePowerUp()
     }, 10000)
     makeEnimies()
+    makeBunkers()
     animateLoop()
-    for(let i = 0; i<evilShips.length; i++){
-        for(let j = 0; j<evilShips[i].length;j++){
+    for (let i = 0; i < evilShips.length; i++) {
+        for (let j = 0; j < evilShips[i].length; j++) {
             setTimeout(() => {
-                createEvilLaser([i,j])
+                createEvilLaser([i, j])
             }, Math.random() * 9999 + 3000)
 
         }
     }
 
 }
+
 function animateLoop() {
     animationFrame = requestAnimationFrame(animateLoop);
     drawBackground()
     drawCharacter()
     moveEnemies()
     drawEnemies()
+    drawBunkers()
     movePowerUps()
-    goodLaserCheckCollisions()
     drawGoodLaser()
     drawScore()
     displayHealth()
     moveEvilLasers()
     checkbadLasersCollision()
+    checkBadShipCollision()
+    goodLaserCheckCollisions()
+    checkBunkerCollision()
 
-    if(playerLives <= 0){
+    if (playerLives <= 0) {
         location.reload()
     }
 }
@@ -53,31 +53,33 @@ function drawBackground() {
     canvas.fillStyle = "#18003f"
     canvas.fillRect(0, 0, 2000, 1250)
 }
-function makePowerUp(){
+
+function makePowerUp() {
     let rnum = Math.floor(Math.random() * 2), p
-    if(rnum == 0){
-         p = createImage("rec/Uranium_Fuel_Rod.png", 1250, Math.random() * 700, 50,50, 2, true, "speed")
-    }else{
-         p = createImage("rec/heart-png-38780.png", 1250, Math.random() * 700, 50,50, 2, true, "heal")
+    if (rnum == 0) {
+        p = createImage("rec/Uranium_Fuel_Rod.png", 1250, Math.random() * 700, 50, 50, 2, true, "speed")
+    } else {
+        p = createImage("rec/heart-png-38780.png", 1250, Math.random() * 700, 50, 50, 2, true, "heal")
     }
 
     powerups.push(p);
     let t = 5000
-    if(playerLives > 3){
+    if (playerLives > 3) {
         t += 7500;
     }
     setTimeout(() => {
         makePowerUp()
     }, Math.random() * 7500 + t)
 }
-function movePowerUps(){
-    for(let i = 0; i<powerups.length; i++){
-        if(player.xval + player.sizex > powerups[i].xval){
-            if(player.yval< powerups[i].yval + powerups[i].sizey) {
-                if(player.yval + player.sizey > powerups[i].yval) {
-                    if(powerups[i].type === "heal") {
+
+function movePowerUps() {
+    for (let i = 0; i < powerups.length; i++) {
+        if (player.xval + player.sizex > powerups[i].xval) {
+            if (player.yval < powerups[i].yval + powerups[i].sizey) {
+                if (player.yval + player.sizey > powerups[i].yval) {
+                    if (powerups[i].type === "heal") {
                         playerLives++
-                    }else if(powerups[i].type === "speed"){
+                    } else if (powerups[i].type === "speed") {
                         goodLazer.velo += 10
                         setTimeout(() => {
                             goodLazer.velo -= 10
@@ -93,15 +95,18 @@ function movePowerUps(){
     }
 
 }
+
 function drawCharacter() {
 
     canvas.drawImage(player, player.xval, player.yval, player.sizex, player.sizey)
 }
-function displayHealth(){
-    for(let i = 0; i<playerLives; i++) {
+
+function displayHealth() {
+    for (let i = 0; i < playerLives; i++) {
         canvas.drawImage(createImage("rec/heart-png-38780.png"), 400 + i * (50 + 25), 10, 50, 50)
     }
 }
+
 function moveEnemies() {
 
     let bottom = [1, -1]
@@ -134,10 +139,68 @@ function moveEnemies() {
                 } else {
                     evilShips[j][i].yval += evilShips[j][i].velo
                 }
+                evilShips[j][i].xval -= 0.2
             }
         }
     }
 }
+
+function checkBadShipCollision() {
+    for (let i = 0; i < evilShips.length; i++) {
+        for (let j = 0; j < evilShips[i].length; j++) {
+            if(evilShips[i][j] !== null){
+            if (player.xval + player.sizex > evilShips[i][j].xval) {
+                if (player.xval < evilShips[i][j].xval + evilShips[i][j].sizex) {
+                    if (player.yval + player.sizey > evilShips[i][j].yval) {
+                        if (evilShips[i][j].yval + evilShips[i][j].sizey > player.yval) {
+                            playerLives -= playerLives;
+                        }
+                    }
+                }
+            }
+            }
+        }
+    }
+}
+
+function makeBunkers(){
+    for(let i = 0; i<2; i++){
+        let bunk = createImage("rec/bunker.png", player.xval+player.sizex,Math.random()*650, 100,100, 0, true)
+        bunk.health = 5
+        bunker.push(bunk)
+    }
+}
+function drawBunkers(){
+    for(let i = 0; i<bunker.length; i++){
+        canvas.drawImage(bunker[i], bunker[i].xval, bunker[i].yval, bunker[i].sizex, bunker[i].sizey)
+        canvas.font = "20px sans-serif"
+        canvas.fillText(bunker[i].health, bunker[i].xval+bunker[i].sizex/2, bunker[i].yval+bunker[i].sizey/2+20)
+    }
+}
+function checkBunkerCollision(){
+    for(let i = 0; i<bunker.length; i++){
+        for(let j = 0; j<evilLasers.length; j++){
+    if (bunker[i].xval + bunker[i].sizex > evilLasers[j].xval) {
+        if (bunker[i].xval < evilLasers[j].xval + evilLasers[j].sizex) {
+            if (bunker[i].yval + bunker[i].sizey > evilLasers[j].yval) {
+                if (evilLasers[j].yval + evilLasers[j].sizey > bunker[i].yval) {
+                    bunker[i].health--
+                    evilLasers.splice(j, 1)
+                    j--
+                }
+            }
+            }
+        }
+        }
+    }
+}
+
+
+
+
+
+
+
 
 function drawEnemies() {
     for (let j = 0; j < evilShips.length; j++) {
@@ -149,33 +212,26 @@ function drawEnemies() {
     }
 }
 
-function createEvilLaser(pos){
-    if(evilShips[pos[0]][pos[1]] !== null){
-        evilLasers.push(createImage("rec/Laser-Beam-PNG-HD-Image.png", evilShips[pos[0]][pos[1]].xval,  evilShips[pos[0]][pos[1]].yval, 100, 50, 5))
+function createEvilLaser(pos) {
+    if (evilShips[pos[0]][pos[1]] !== null) {
+        evilLasers.push(createImage("rec/Laser-Beam-PNG-HD-Image.png", evilShips[pos[0]][pos[1]].xval, evilShips[pos[0]][pos[1]].yval, 100, 25, 5))
         setTimeout(() => {
             createEvilLaser(pos)
-        }, Math.random() * 9999 +  5000)
+        }, Math.random() * 9999 + 5000)
     }
 }
 
-function moveEvilLasers(){
-    for(let i = 0; i<evilLasers.length; i++){
+function moveEvilLasers() {
+    for (let i = 0; i < evilLasers.length; i++) {
         evilLasers[i].xval -= evilLasers[i].velo
         canvas.drawImage(evilLasers[i], evilLasers[i].xval, evilLasers[i].yval, evilLasers[i].sizex, evilLasers[i].sizey)
 
-        if(evilLasers[i].xval < -evilLasers[i].sizex){
+        if (evilLasers[i].xval < -evilLasers[i].sizex) {
             evilLasers.splice(i, 1)
             i--
         }
     }
 }
-
-
-
-
-
-
-
 
 
 function makeEnimies() {
@@ -194,7 +250,7 @@ function drawScore() {
 }
 
 function drawGoodLaser() {
-    if(goodLazer.xval + goodLazer.sizex > 1600){
+    if (goodLazer.xval + goodLazer.sizex > 1600) {
         laserInMotion = false
         goodLazer.visi = false
     }
@@ -228,12 +284,12 @@ function goodLaserCheckCollisions() {
     }
 }
 
-function checkbadLasersCollision(){
-    for(let i = 0; i<evilLasers.length; i++){
+function checkbadLasersCollision() {
+    for (let i = 0; i < evilLasers.length; i++) {
         let s = evilLasers[i]
-        if(player.xval + player.sizex > s.xval){
-            if(player.yval< s.yval + s.sizey) {
-                if(player.yval + player.sizey > s.yval) {
+        if (player.xval + player.sizex > s.xval) {
+            if (player.yval < s.yval + s.sizey) {
+                if (player.yval + player.sizey > s.yval) {
                     playerLives--
                     evilLasers.splice(i, 1)
                     i--
@@ -271,7 +327,7 @@ $(document).keydown((event) => {
         }
     }
     if (keycode == 32) {
-        if(!laserInMotion) {
+        if (!laserInMotion) {
             goodLazer.xval = player.xval
             goodLazer.yval = player.yval
             goodLazer.visi = true
