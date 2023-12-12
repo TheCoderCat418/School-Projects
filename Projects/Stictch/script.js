@@ -148,58 +148,71 @@ function moveEnemies() {
 function checkBadShipCollision() {
     for (let i = 0; i < evilShips.length; i++) {
         for (let j = 0; j < evilShips[i].length; j++) {
-            if(evilShips[i][j] !== null){
-            if (player.xval + player.sizex > evilShips[i][j].xval) {
-                if (player.xval < evilShips[i][j].xval + evilShips[i][j].sizex) {
-                    if (player.yval + player.sizey > evilShips[i][j].yval) {
-                        if (evilShips[i][j].yval + evilShips[i][j].sizey > player.yval) {
-                            playerLives -= playerLives;
+            if (evilShips[i][j] !== null) {
+                if (player.xval + player.sizex > evilShips[i][j].xval) {
+                    if (player.xval < evilShips[i][j].xval + evilShips[i][j].sizex) {
+                        if (player.yval + player.sizey > evilShips[i][j].yval) {
+                            if (evilShips[i][j].yval + evilShips[i][j].sizey > player.yval) {
+                                playerLives -= playerLives;
+                            }
                         }
                     }
                 }
             }
-            }
         }
     }
 }
 
-function makeBunkers(){
-    for(let i = 0; i<2; i++){
-        let bunk = createImage("rec/bunker.png", player.xval+player.sizex,Math.random()*650, 100,100, 0, true)
+function makeBunkers() {
+    for (let i = 0; i < 2; i++) {
+        let bunk = createImage("rec/bunker.png", player.xval + player.sizex, Math.random() * 650, 100, 100, 0, true)
         bunk.health = 5
         bunker.push(bunk)
     }
 }
-function drawBunkers(){
-    for(let i = 0; i<bunker.length; i++){
+
+function drawBunkers() {
+    for (let i = 0; i < bunker.length; i++) {
+        if (bunker[i].health <= 0) {
+            bunker.splice(i, 1)
+        }
         canvas.drawImage(bunker[i], bunker[i].xval, bunker[i].yval, bunker[i].sizex, bunker[i].sizey)
         canvas.font = "20px sans-serif"
-        canvas.fillText(bunker[i].health, bunker[i].xval+bunker[i].sizex/2, bunker[i].yval+bunker[i].sizey/2+20)
+        canvas.fillStyle = "#ffffff"
+        canvas.fillText(bunker[i].health, bunker[i].xval + bunker[i].sizex / 2, bunker[i].yval + bunker[i].sizey / 2 + 20)
     }
 }
-function checkBunkerCollision(){
-    for(let i = 0; i<bunker.length; i++){
-        for(let j = 0; j<evilLasers.length; j++){
-    if (bunker[i].xval + bunker[i].sizex > evilLasers[j].xval) {
-        if (bunker[i].xval < evilLasers[j].xval + evilLasers[j].sizex) {
-            if (bunker[i].yval + bunker[i].sizey > evilLasers[j].yval) {
-                if (evilLasers[j].yval + evilLasers[j].sizey > bunker[i].yval) {
-                    bunker[i].health--
-                    evilLasers.splice(j, 1)
-                    j--
+
+function checkBunkerCollision() {
+    for (let i = 0; i < bunker.length; i++) {
+        for (let j = 0; j < evilLasers.length; j++) {
+            if (bunker[i].xval + bunker[i].sizex > evilLasers[j].xval) {
+                if (bunker[i].xval < evilLasers[j].xval + evilLasers[j].sizex) {
+                    if (bunker[i].yval + bunker[i].sizey > evilLasers[j].yval) {
+                        if (evilLasers[j].yval + evilLasers[j].sizey > bunker[i].yval) {
+                            bunker[i].health--
+                            evilLasers.splice(j, 1)
+                            j--
+                        }
+                    }
                 }
             }
-            }
         }
+        if (goodLazer.xval + goodLazer.sizex > bunker[i].xval) {
+             if (goodLazer.xval < bunker[i].xval + bunker[i].sizex) {
+                 if (goodLazer.yval + goodLazer.sizey > bunker[i].yval) {
+                     if (bunker[i].yval + bunker[i].sizey > goodLazer.yval) {
+                        bunker[i].health--
+                        goodLazer.yval = 0
+                        goodLazer.xval = 0
+                        goodLazer.visi = false
+                        laserInMotion = false
+                    }
+                }
+            }
         }
     }
 }
-
-
-
-
-
-
 
 
 function drawEnemies() {
