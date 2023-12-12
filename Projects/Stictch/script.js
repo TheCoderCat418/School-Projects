@@ -1,4 +1,5 @@
 let animationFrame, canvas, player, evilShips = [], movingUp = false
+let bonusbadguy = null;
 let goodLazer, score = 0
 let evilLasers = []
 let laserInMotion = false
@@ -24,6 +25,9 @@ function init() {
 
         }
     }
+    setTimeout(() => {
+        makeBonusBadGuy()
+    }, 12000)
 
 }
 
@@ -37,6 +41,7 @@ function animateLoop() {
     movePowerUps()
     drawGoodLaser()
     drawScore()
+    displayBonusBadGuy()
     displayHealth()
     moveEvilLasers()
     checkbadLasersCollision()
@@ -213,6 +218,26 @@ function checkBunkerCollision() {
         }
     }
 }
+
+function makeBonusBadGuy(){
+    bonusbadguy = createImage("rec/Police_Cruiser.png", 1200, 500, 300, 150, 4)
+}
+function displayBonusBadGuy() {
+    if (bonusbadguy !== null) {
+        canvas.drawImage(bonusbadguy, bonusbadguy.xval, bonusbadguy.yval, bonusbadguy.sizex, bonusbadguy.sizey)
+    }
+}
+let bonusMovingDown = false
+function moveBonus(){
+    if(bonusbadguy.yval < 0){
+        bonusMovingDown = true
+    }
+    if(bonusMovingDown){
+        bonusbadguy.yval += bonusbadguy.velo
+    }
+}
+
+
 
 
 function drawEnemies() {
