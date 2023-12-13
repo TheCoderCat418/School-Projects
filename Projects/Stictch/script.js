@@ -36,6 +36,7 @@ function animateLoop() {
     drawBackground()
     drawCharacter()
     moveEnemies()
+    moveBonus()
     drawEnemies()
     drawBunkers()
     movePowerUps()
@@ -48,6 +49,7 @@ function animateLoop() {
     checkBadShipCollision()
     goodLaserCheckCollisions()
     checkBunkerCollision()
+    checkBonusCollision()
 
     if (playerLives <= 0) {
         location.reload()
@@ -229,14 +231,35 @@ function displayBonusBadGuy() {
 }
 let bonusMovingDown = false
 function moveBonus(){
-    if(bonusbadguy.yval < 0){
-        bonusMovingDown = true
-    }
-    if(bonusMovingDown){
-        bonusbadguy.yval += bonusbadguy.velo
+    if(bonusbadguy !== null) {
+        if (bonusbadguy.yval < 0) {
+            bonusMovingDown = true
+        }
+        if(bonusbadguy.yval + bonusbadguy.sizey > 750){
+            bonusMovingDown = false
+        }
+        if (bonusMovingDown) {
+            bonusbadguy.yval += bonusbadguy.velo
+        } else {
+            bonusbadguy.yval -= bonusbadguy.velo
+        }
     }
 }
 
+function checkBonusCollision(){
+    if (bonusbadguy !== null) {
+        if (goodLazer.xval + goodLazer.sizex > bonusbadguy.xval) {
+            if (goodLazer.xval < bonusbadguy.xval + bonusbadguy.sizex) {
+                if (goodLazer.yval + goodLazer.sizey > bonusbadguy.yval) {
+                    if (bonusbadguy.yval + bonusbadguy.sizey > goodLazer.yval) {
+                        bonusbadguy = null;
+                        score += 20;
+                    }
+                }
+            }
+        }
+    }
+}
 
 
 
