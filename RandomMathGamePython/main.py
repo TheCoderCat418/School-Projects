@@ -26,12 +26,32 @@ while selectedDifficulty == "":
         case _:
             print("We were unable to determine the difficulty you wanted. Please try again. \n\n")
 
-maxQuestions = 5
-currentQuestion = 0
+# Assemble Questions
+amtOfQuestions = 5
+questions = []
 
-successArray = []
-for i in range(maxQuestions):
-    successArray[i] = 0
+for x in range(amtOfQuestions):
+    if selectedMode == "ADD":
+        muti = 1
+        if selectedDifficulty == "H":
+            muti = 10
+        num1, num2 = random.randint(0, 10*muti), random.randint(0, 10*muti)
 
-while currentQuestion <= maxQuestions:
-    r
+        questions.append({"q": "What is " + str(num1) + " + " + str(num2) + " ?", "a": num1 + num2, "s": False,
+                          "o": "ADD"})
+
+for i in range(len(questions)):
+    while True:
+        try:
+            anw = int(input(questions[i]["q"]))
+            if anw == questions[i]["a"]:
+                questions[i]["s"] = True
+            break
+        except ValueError:
+            print("Invalid Number. Try again.\n")
+correct = 0
+for i in range(len(questions)):
+    if questions[i]["s"]:
+        correct += 1
+    if i == len(questions) - 1:
+        print("\n\n" + str(correct / amtOfQuestions * 100) + "%")
