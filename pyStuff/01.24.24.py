@@ -15,7 +15,6 @@ def securityRoom():
 def Bathroom():
     global toletClogged, room
     room = "bath"
-    while room == "bath":
     print("In bathroom. What would you like to do?")
     print("1. Go to the stall")
     print("2. Go to the sink")
