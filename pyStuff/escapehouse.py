@@ -1,6 +1,6 @@
-mainRoomData = {"@Obj": ["couch", "tv", "remote", "coffee table"], "@Act": ["Search the couch.", "Go to tv", ]}
+mainRoomData = {"@Obj": ["couch", "tv", "remote", "coffee table"], "@Act": ["Search the couch.", "Go to tv"], "@MOVE": ["Playroom", "Hallway", "Outside"]}
 playerHas = []
-currentRoom = None
+currentRoom = mainRoomData
 
 
 def rootOperation():
@@ -19,6 +19,20 @@ def rootOperation():
                 print("The use command allows you to use an object in your inventory. Syntax: USE <OBJECT NAME>")
             else:
                 print("Use the help command to learn information about a command. Syntax: HELP <COMMAND>")
+        elif inp.find("MOVE") != -1:
+            moved = False
+            pos = inp.find("MOVE") + 5
+            #for x in currentRoom["@MOVE"]:
+            #    print(x)
+            for x in currentRoom["@MOVE"]:
+                if inp.find(x.upper(), pos) != -1:
+                    print("Moving")
+                    moved = True
+            if not moved:
+                print("Please try again")
+
+
+
 
 
 
