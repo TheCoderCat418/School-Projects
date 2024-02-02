@@ -1,10 +1,35 @@
+playerHas = []
+playerData = []
+
+
+def addToInventory(obj):
+    playerHas.append(obj)
+
+
+def isInPlayerData(strg):
+    try:
+        playerData.index(strg)
+        return True
+    except ValueError:
+        return False
+
+
+def addToPlayerData(strg):
+    playerData.append(strg)
+
+
 MainRoomData = {
     "@INT": {
         "couch": {
             "@RESP": [
                 {
-                    "@SAY": "You found some coins!",
-                    "@RUN": lambda: addToInventory("Some Coins"),
+                    "@SUCCESS": "You found some coins!",
+                    "@FAILED": "You didn't find anything",
+                    "@RUN": (
+                        lambda: addToInventory("Some Coins"),
+                        addToPlayerData("searchedCouch"),
+                    ),
+                    "@CHECK": lambda: isInPlayerData("searchedCouch"),
                 }
             ],
             "@ACT": ["Search the couch."],
@@ -19,10 +44,8 @@ MainRoomData = {
     "@MOVE": ["Playroom", "Hallway", "Outside"],
 }
 
+
 PlayroomData = {}
-
-playerHas = []
-
 currentRoom = MainRoomData
 
 
@@ -75,18 +98,27 @@ def rootOperation():
             pos = inp.find("INTERACT") + 9
             for x in currentRoom["@INT"]:
                 if inp.find(x.upper(), pos) != -1:
-                    while True:
-                        print("What would you like to interact with?")
+                    while not interacted:
+                        print("What would you like to do?")
                         for y in range(len(currentRoom["@INT"][x]["@ACT"])):
                             print(str(y) + ". " + currentRoom["@INT"][x]["@ACT"][y])
                         inpu = input("> ")
-                        
-            if not interacted:
-                print("Please try again")
-
-
-def addToInventory(obj):
-    playerHas.append(obj)
+                        for y in range(len(currentRoom["@INT"][x]["@ACT"])):
+                            if inpu == str(y):
+                                interacted = True
+                                if currentRoom["@INT"][x]["@RESP"][y]["@CHECK"]():
+                                    currentRoom["@INT"][x]["@RESP"][y]["@RUN"]()
+                                    print(
+                                        currentRoom["@INT"][x]["@RESP"][y]["@SUCCESS"]
+                                    )
+                                else:
+                                    print(currentRoom["@INT"][x]["@RESP"][y]["@FAILED"])
+                                break
+                        if not interacted:
+                            print("That is not a valid input, please try again.")
+                else:
+                    #fix
+                    print("Object was not found.")
 
 
 rootOperation()
