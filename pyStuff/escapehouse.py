@@ -1,7 +1,16 @@
 playerHas = []
 playerData = []
 
-objectData = {"coins": {"@NAME": "Coins", "@DESC": "Some coins.", "@HASUSE": False}}
+objectData = {
+    "coins": {"@NAME": "Coins", "@DESC": "Some coins.", "@HASUSE": False},
+    "cheese": {
+        "@NAME": "Cheese",
+        "@DESC": "Cheddar, yummy!",
+        "@HASUSE": True,
+        "@USE": lambda: removeFromIventory("cheese"),
+        "@SUCCESS": "Tasty!",
+    },
+}
 
 
 def addToInventory(obj):
@@ -20,6 +29,10 @@ def isInPlayerData(strg):
 
 def addToPlayerData(strg):
     playerData.append(strg)
+
+
+def removeFromIventory(obj):
+    playerHas.remove(obj)
 
 
 def rMet(arg):
@@ -62,7 +75,7 @@ MainRoomData = {
                     "@SUCCESS": "You found some coins!",
                     "@FAILED": "You didn't find anything",
                     "@RUN": lambda: addToInventory("coins"),
-                    "@CHECK": "searchedCouch",
+                    "@CHECK": "DATA-searchedCouch",
                 }
             ],
             "@ACT": ["Search the couch."],
@@ -99,7 +112,7 @@ MainRoomData = {
         },
         "outside": {
             "@NAME": "Outside",
-            "@REQ": ["HAS-key"],
+            "@REQ": ["HAS-Ekey", "HAS-crowbar"],
             "@REF": "outside",
         },
     },
@@ -113,7 +126,7 @@ HallwayData = {
                 {
                     "@SUCCESS": "You did nothing",
                     "@RUN": None,
-                    "@FAILED": "",
+                    "@FAILED": "You did nothing",
                     "@CHECK": None,
                 },
             ],
@@ -133,8 +146,37 @@ HallwayData = {
         },
         "outside": {
             "@NAME": "Bathroom",
-            "@REQ": ["HAS-key"],
+            "@REQ": [],
             "@REF": "Bathroom",
+        },
+    },
+}
+KitchenData = {
+    "@NAME": "Kitchen",
+    "@INT": {
+        "fridge": {
+            "@NAME": "Fridge",
+            "@RESP": [
+                {
+                    "@SUCCESS": "Found some cheese",
+                    "@RUN": None,
+                    "@FAILED": "The fridge is empty",
+                    "@CHECK": "HAS-cheese",
+                },
+            ],
+            "@ACT": ["Do nothing"],
+        },
+    },
+    "@MOVE": {
+        "hallway": {
+            "@NAME": "Hallway",
+            "@REQ": [],
+            "@REF": "Hallway",
+        },
+        "closet": {
+            "@NAME": "Closet",
+            "@REQ": [],
+            "@REF": "Closet",
         },
     },
 }
@@ -203,13 +245,31 @@ def rootOperation():
                         for y in range(len(currentRoom["@INT"][x]["@ACT"])):
                             if inpu == str(y):
                                 interacted = True
-                                if not isInPlayerData(
-                                    currentRoom["@INT"][x]["@RESP"][y]["@CHECK"]
-                                ):
+                                yes = False
+                                d = True
+                                s = currentRoom["@INT"][x]["@RESP"][y]["@CHECK"].split(
+                                    "-"
+                                )
+                                match s[0].upper():
+                                    case "DATA":
+                                        try:
+                                            playerData.index(s[1])
+                                            yes = True
+                                        except ValueError:
+                                            pass
+                                    case "HAS":
+                                        d = False
+                                        try:
+                                            playerHas.index(s[1])
+                                            yes = True
+                                        except ValueError:
+                                            pass
+                                if not yes:
                                     currentRoom["@INT"][x]["@RESP"][y]["@RUN"]
-                                    addToPlayerData(
-                                        currentRoom["@INT"][x]["@RESP"][y]["@CHECK"]
-                                    )
+                                    if d:
+                                        addToPlayerData(s[1])
+                                    else:
+                                        addToInventory(s[1])
                                     print(
                                         currentRoom["@INT"][x]["@RESP"][y]["@SUCCESS"]
                                     )
