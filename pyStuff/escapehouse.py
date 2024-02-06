@@ -1,16 +1,7 @@
+import sys
+
 playerHas = []
 playerData = []
-
-objectData = {
-    "coins": {"@NAME": "Coins", "@DESC": "Some coins.", "@HASUSE": False},
-    "cheese": {
-        "@NAME": "Cheese",
-        "@DESC": "Cheddar, yummy!",
-        "@HASUSE": True,
-        "@USE": lambda: removeFromIventory("cheese"),
-        "@SUCCESS": "Tasty!",
-    },
-}
 
 
 def addToInventory(obj):
@@ -47,13 +38,13 @@ def rMet(arg):
                     main = main and False
             case "HAS":
                 try:
-                    playerHas.index(s[0])
+                    playerHas.index(s[1])
                     main = main and True
                 except ValueError:
                     main = main and False
             case "DATA":
                 try:
-                    playerData.index(s[0])
+                    playerData.index(s[1])
                     main = main and True
                 except ValueError:
                     main = main and False
@@ -63,6 +54,38 @@ def rMet(arg):
 def setRoom(arrName):
     global currentRoom
     currentRoom = eval(arrName + "Data")
+
+
+objectData = {
+    "coins": {"@NAME": "Coins", "@DESC": "Some coins.", "@HASUSE": False},
+    "cheese": {
+        "@NAME": "Cheese",
+        "@DESC": "Cheddar, yummy!",
+        "@HASUSE": True,
+        "@USE": "RM-cheese",
+        "@SUCCESS": "Tasty!",
+    },
+    "bkey": {
+        "@NAME": "BKEY",
+        "@DESC": "A key to the bathroom",
+        "@HASUSE": False,
+    },
+    "ekey": {
+        "@NAME": "EKEY",
+        "@DESC": "A key to the door",
+        "@HASUSE": False,
+    },
+    "dkey": {
+        "@NAME": "DKEY",
+        "@DESC": "A key to the drawer",
+        "@HASUSE": False,
+    },
+    "crowbar": {
+        "@NAME": "Crowbar",
+        "@DESC": "A crowbar. Nothing more, nothing less.",
+        "@HASUSE": False,
+    },
+}
 
 
 MainRoomData = {
@@ -87,24 +110,43 @@ MainRoomData = {
                     "@SUCCESS": "You pushed the button but nothing happens",
                     "@RUN": None,
                     "@FAILED": "",
-                    "@CHECK": None,
+                    "@CHECK": "-",
                 },
                 {
                     "@SUCCESS": "You fittle with the cables.",
                     "@RUN": None,
                     "@FAILED": "",
-                    "@CHECK": None,
+                    "@CHECK": "-",
+                },
+                {
+                    "@SUCCESS": "A crowbar? Maybe thats why the tv is not working.",
+                    "@RUN": None,
+                    "@FAILED": "Nothing here.",
+                    "@CHECK": "HAS-crowbar",
                 },
             ],
-            "@ACT": ["Turn on the tv.", "Check cables."],
+            "@ACT": ["Turn on the tv.", "Check cables.", "Look behind TV stand."],
+        },
+        "drawer": {
+            "@NAME": "Drawer",
+            "@RESP": [
+                {
+                    "@SUCCESS": "You open the draw and there is a key inside that says bathroom",
+                    "@RUN": None,
+                    "@FAILED": "It is empty.",
+                    "@CHECK": "HAS-BKey",
+                },
+                {
+                    "@SUCCESS": "You find a key that says 'exit'.",
+                    "@RUN": None,
+                    "@FAILED": "It is empty.",
+                    "@CHECK": "HAS-EKey",
+                },
+            ],
+            "@ACT": ["Open the drawer.", "Look on top."],
         },
     },
     "@MOVE": {
-        "playroom": {
-            "@NAME": "Playroom",
-            "@REQ": [],
-            "@REF": "playroom",
-        },
         "hallway": {
             "@NAME": "Hallway",
             "@REQ": [],
@@ -112,10 +154,11 @@ MainRoomData = {
         },
         "outside": {
             "@NAME": "Outside",
-            "@REQ": ["HAS-Ekey", "HAS-crowbar"],
+            "@REQ": ["HAS-EKey", "HAS-crowbar"],
             "@REF": "outside",
         },
     },
+    "@ENDGAME": False,
 }
 HallwayData = {
     "@NAME": "Hallway",
@@ -127,10 +170,28 @@ HallwayData = {
                     "@SUCCESS": "You did nothing",
                     "@RUN": None,
                     "@FAILED": "You did nothing",
-                    "@CHECK": None,
+                    "@CHECK": "-",
+                },
+                {
+                    "@SUCCESS": "You need the key",
+                    "@RUN": None,
+                    "@FAILED": "You open the drawer to find nothing. Maybe it is somewhere else.",
+                    "@CHECK": "HAS-DKey",
                 },
             ],
-            "@ACT": ["Do nothing"],
+            "@ACT": ["Do nothing", "Open drawer (NEED DKey)"],
+        },
+        "drawer": {
+            "@NAME": "Drawer",
+            "@RESP": [
+                {
+                    "@SUCCESS": "You need the key",
+                    "@RUN": None,
+                    "@FAILED": "You open the drawer to find nothing. Maybe it is somewhere else.",
+                    "@CHECK": "HAS-DKey",
+                }
+            ],
+            "@ACT": ["Open drawer (NEED DKey)"],
         },
     },
     "@MOVE": {
@@ -144,12 +205,38 @@ HallwayData = {
             "@REQ": [],
             "@REF": "Kitchen",
         },
-        "outside": {
+        "bathroom": {
             "@NAME": "Bathroom",
-            "@REQ": [],
+            "@REQ": ["HAS-BKey"],
             "@REF": "Bathroom",
         },
     },
+    "@ENDGAME": False,
+}
+BathroomData = {
+    "@NAME": "Bathroom",
+    "@INT": {
+        "wash": {
+            "@NAME": "Wash",
+            "@RESP": [
+                {
+                    "@SUCCESS": "You wash your hands.",
+                    "@RUN": None,
+                    "@FAILED": "You wash your hands.",
+                    "@CHECK": "-",
+                },
+            ],
+            "@ACT": ["Wash your hands."],
+        },
+    },
+    "@MOVE": {
+        "hallway": {
+            "@NAME": "Hallway",
+            "@REQ": [],
+            "@REF": "Hallway",
+        },
+    },
+    "@ENDGAME": False,
 }
 KitchenData = {
     "@NAME": "Kitchen",
@@ -166,6 +253,24 @@ KitchenData = {
             ],
             "@ACT": ["Do nothing"],
         },
+        "cabnet": {
+            "@NAME": "Cabnet",
+            "@RESP": [
+                {
+                    "@SUCCESS": "Found some dust",
+                    "@RUN": None,
+                    "@FAILED": "Found some dust",
+                    "@CHECK": "-",
+                },
+                {
+                    "@SUCCESS": "Found a key",
+                    "@RUN": None,
+                    "@FAILED": "There is nothing here",
+                    "@CHECK": "HAS-DKey",
+                },
+            ],
+            "@ACT": ["Open cabnet A", "Open cabnet B"],
+        },
     },
     "@MOVE": {
         "hallway": {
@@ -173,16 +278,21 @@ KitchenData = {
             "@REQ": [],
             "@REF": "Hallway",
         },
-        "closet": {
-            "@NAME": "Closet",
-            "@REQ": [],
-            "@REF": "Closet",
-        },
     },
+    "@ENDGAME": False,
 }
+
+outsideData = {"@ENDGAME": True}
 
 PlayroomData = {}
 currentRoom = MainRoomData
+
+
+def endGame():
+    print(
+        " You quicky weld the crowbar and you start to hack at the wooden boards attached to the door frame. \n You pry off the last one and you hear running behind you. \n Staying focused, you quickly insert the key and turn it to the right. \n The footsteps get louder and louder as you use all of your bodyweight to open the door. \n You are blinded by the lights, but you run forward anyways. \n You trip over some stairs, then something grabs you. \n You struggle to get up but you can't. Too Tired. \n What ever chased you said 'Thank you for assuming the party escort submission position.' \n You feel yourself being dragged into the house again. The lights go out."
+    )
+    sys.exit()
 
 
 def rootOperation():
@@ -226,8 +336,11 @@ def rootOperation():
                 if inp.find(x.upper(), pos) != -1:
                     if rMet(currentRoom["@MOVE"][x]["@REQ"]):
                         setRoom(currentRoom["@MOVE"][x]["@REF"])
+                        if currentRoom["@ENDGAME"]:
+                            endGame()
                         print("Moving")
                         moved = True
+                        break
                     else:
                         print("You are missing something!")
             if not moved:
@@ -288,7 +401,15 @@ def rootOperation():
                 if inp.find(x.upper(), pos) != -1:
                     used = True
                     if objectData[x]["@HASUSE"]:
-                        objectData[x]["@USE"]
+                        s = objectData[x]["@USE"].split("-")
+                        match s[0].upper():
+                            case "RM":
+                                try:
+                                    playerHas.remove(s[1])
+                                    yes = True
+                                except ValueError:
+                                    pass
+
                         print(objectData[x]["@SUCCESS"])
                         break
                     else:
@@ -298,15 +419,22 @@ def rootOperation():
                 print("Object not found.")
         elif inp.find("LIST") != -1:
             print("You are in the " + currentRoom["@NAME"] + ".")
-            print("There are " + str(len(currentRoom["@INT"])) + " objects.")
+            print(
+                "You can interact with " + str(len(currentRoom["@INT"])) + " object(s)."
+            )
             for x in currentRoom["@INT"]:
                 print(" - " + currentRoom["@INT"][x]["@NAME"])
             print("You can move to the following rooms:")
             for x in currentRoom["@MOVE"]:
-                print(" - " + x)
+                print(" - " + currentRoom["@MOVE"][x]["@NAME"])
             print("You have the following items in your inventory:")
             for x in playerHas:
-                print(" - " + objectData[x]["@NAME"])
+                print(
+                    " - "
+                    + objectData[x.lower()]["@NAME"]
+                    + " | "
+                    + objectData[x.lower()]["@DESC"]
+                )
             print("That is all.")
 
 
