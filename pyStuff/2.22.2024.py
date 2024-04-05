@@ -48,14 +48,14 @@ for _ in range(x):
 
 print("\n\n :" + str((nBust/x)*100))
 
-newNBust = nBust
-newBust = x - nBust
-divInt = 1
-while divInt <= nBust:
-    if nBust % divInt == 0 and (x - nBust) % divInt == 0:
-        newNBust = nBust / divInt
-        newBust = (x-nBust) / divInt
-        divInt = 1
-    else:
-        divInt+=1
-print("Frac " + str(newNBust) + "/" + str(newBust))
+# newNBust = nBust
+# newBust = x - nBust
+# divInt = 1
+# while divInt <= nBust:
+#     if nBust % divInt == 0 and (x - nBust) % divInt == 0:
+#         newNBust = nBust / divInt
+#         newBust = (x-nBust) / divInt
+#         divInt = 1
+#     else:
+#         divInt+=1
+# print("Frac " + str(newNBust) + "/" + str(newBust))
