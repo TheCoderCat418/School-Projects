@@ -1,50 +1,74 @@
-print("""
-◢ ◪ ◪ ◪◪◪
-███ ඞ                                                          ███
-███                                                            ███
-███                                                            ███
-███                                                            ███
-███                                                            ███
-███                                                            ███
-███                                                            ███
-███                                                            ███
-███                                                            ███
-███                                                            ███
-███                                                            ███
-███                                                            ███
-███                                                            ███
-███                                                            ███
-███                                                            ███
-███                                                            ███
-███                                                            ███
-███                                                            ███
-███                                                            ███
-███                                                            ███
-██████████████████████████████████████████████████████████████████
-""")
-import pygame
+screen = []
+LENX = 22
+LENY = 22
+for i in range(LENX):
+    screen.append([])
 
-# pygame setup
-pygame.init()
-screen = pygame.display.set_mode((1280, 720))
-clock = pygame.time.Clock()
-running = True
+def fill(letter):
+    for i in screen:
+        for z in range(LENY):
+            i.append(letter)
 
-while running:
-    # poll for events
-    # pygame.QUIT event means the user clicked X to close your window
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            running = False
+def addBorders():
+    screen[0]
+    for i in range(LENY):
+        screen[i] = "▧"
+        screen[len(screen)-1-i] = "▧"
+    for i in screen:
+        if i == 0 or i == len(screen)-1:
+            continue
+        i[0] = "▧"
 
-    # fill the screen with a color to wipe away anything from last frame
-    screen.fill("purple")
 
-    # RENDER YOUR GAME HERE
+def printStuff():
 
-    # flip() the display to put your work on screen
-    pygame.display.flip()
+    for i in screen:
+        line = ""
+        for j in i:
+            line += j + " "
+        print(line)
 
-    clock.tick(60)  # limits FPS to 60
+fill()
+while True:
+    fill("a")
+    printStuff()
+    fill("b")
+    printStuff()
+    fill("c")
+    printStuff()
+    fill("d")
+    printStuff()
+    fill("e")
+    printStuff()
+    fill("f")
+    printStuff()
+    fill("g")
+    printStuff()
+    fill("h")
+    printStuff()
 
-pygame.quit()
+#addBorders()
+printStuff()
+
+#print("""
+# ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ 
+# ▧ U   D
+# ▧ W W W  
+# ▧
+# ▧
+# ▧
+# ▧
+# ▧
+# ▧
+# ▧
+# ▧
+# ▧
+# ▧
+# ▧
+# ▧
+# ▧
+# ▧
+# ▧
+# ▧
+# ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ 
+# """)
