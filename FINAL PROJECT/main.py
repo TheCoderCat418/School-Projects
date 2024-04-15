@@ -1,56 +1,31 @@
+from wall import Wall
+from row  import Row
+# Y 2 X
 screen = []
 LENX = 22
 LENY = 22
-for i in range(LENX):
-    screen.append([])
-
-def fill(letter):
-    for i in screen:
-        for z in range(LENY):
-            i.append(letter)
+for i in range(LENY):
+    screen.append(Row(LENX))
 
 def addBorders():
-    screen[0]
+    for i in range(LENX):
+        screen[0].setTile(Wall(), i)
+        screen[LENY-1].setTile(Wall(), i)
     for i in range(LENY):
-        screen[i] = "▧"
-        screen[len(screen)-1-i] = "▧"
-    for i in screen:
-        if i == 0 or i == len(screen)-1:
-            continue
-        i[0] = "▧"
+        screen[i].setTile(Wall(), 0)
+        screen[LENY-1].setTile(Wall(), LENY-1)
 
 
-def printStuff():
-
+def printScreen():
     for i in screen:
         line = ""
-        for j in i:
-            line += j + " "
+        for j in range(len(i)):
+            line +=i.getTile(j).getChar() + " "
         print(line)
 
-fill()
-while True:
-    fill("a")
-    printStuff()
-    fill("b")
-    printStuff()
-    fill("c")
-    printStuff()
-    fill("d")
-    printStuff()
-    fill("e")
-    printStuff()
-    fill("f")
-    printStuff()
-    fill("g")
-    printStuff()
-    fill("h")
-    printStuff()
+addBorders()
+printScreen()
 
-#addBorders()
-printStuff()
-
-#print("""
 # ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ 
 # ▧ U   D
 # ▧ W W W  
@@ -71,4 +46,4 @@ printStuff()
 # ▧
 # ▧
 # ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ 
-# """)
+
