@@ -5,7 +5,7 @@ import signal
 userSelected = []
 selectedNumbers = []
 selectedNumbersLeft = 5
-selectionsLeft = 20
+selectionsLeft = 30
 
 def printArr(arr):
     URArray = ""
@@ -21,6 +21,12 @@ def wasNumberChosen(num):
         if(num == i):
             return True
     return False
+def wasNumberAlreadyPicked(num):
+    for i in userSelected:
+        if i == num:
+            return True
+    return False
+            
 
 print("Hey there. Wanna play a game? (Y/N)")
 while(True):
@@ -42,13 +48,20 @@ while len(selectedNumbers) < 5:
         selectedNumbers.append(genNum)
 
 while selectionsLeft > 0:
-    print(f"Please select your first number. You have already selected the following numbers: {printArr(userSelected)}. The are {selectedNumbersLeft} numbers still hiding. Please select another number.")
+    print(f"Please select your first number. You have already selected the following numbers: {printArr(userSelected)}. The are {selectedNumbersLeft} numbers still hiding. You still have {selectionsLeft} guesses left. Please select a number.")
     while(True):
         try:
             inp = input("> ")
             num = int(inp)
+            if num < 1 or num > 100:
+                print("Not in range")
+                raise ValueError()
+            if wasNumberAlreadyPicked(num):
+                print("You already picked that one. Pick another!")
+                continue
             if wasNumberChosen(num):
                 print("You found one of the numbers!")
+                selectedNumbersLeft-=1
             else:
                 print("You did not find a number")
             selectionsLeft-=1
@@ -56,4 +69,5 @@ while selectionsLeft > 0:
             break
         except ValueError:
             print("That is not a vaild number. Try again.")
-print("DONE")
+print(f"Out of guesses! The numbers were {printArr(selectedNumbers)}. You found {5-selectedNumbersLeft} of of the 5.")
+print("Have a good day! Thanks for playing")
