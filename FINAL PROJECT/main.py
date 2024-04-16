@@ -13,7 +13,7 @@ def addBorders():
         screen[LENY-1].setTile(Wall(), i)
     for i in range(LENY):
         screen[i].setTile(Wall(), 0)
-        screen[LENY-1].setTile(Wall(), LENY-1)
+        screen[LENY-i-1].setTile(Wall(), LENX-1)
 
 
 def printScreen():
