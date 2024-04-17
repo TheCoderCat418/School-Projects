@@ -1,7 +1,7 @@
-from os import kill, getpid
+import os
 from random import randint
 import signal
-
+os.system("str")
 userSelected = []
 selectedNumbers = []
 selectedNumbersLeft = 5
@@ -27,7 +27,7 @@ while(True):
     inp = input("> ")
     if inp.upper() == "N":
         print("Well, goodbye!")
-        kill(getpid(), signal.SIGINT)
+        os.kill(os.getpid(), signal.SIGINT)
     elif inp.upper() == "Y":
         print(f"I will guess 5 numbers 1-100, lets see how many you can find within {selectionsLeft} turns!")
         break
