@@ -1,11 +1,11 @@
 import os
 from random import randint
 import signal
-os.system("str")
+os.system("cls")
 userSelected = []
 selectedNumbers = []
 selectedNumbersLeft = 5
-selectionsLeft = 30
+selectionsLeft = 15
 
 def printArr(arr):
     URArray = ""
@@ -35,25 +35,25 @@ while(True):
         print("Well, goodbye!")
         os.kill(os.getpid(), signal.SIGINT)
     elif inp.upper() == "Y":
-        print(f"I will guess 5 numbers 1-100, lets see how many you can find within {selectionsLeft} turns!")
+        print(f"I will guess 5 numbers 1-40, lets see how many you can find within {selectionsLeft} turns!")
         break
     else:
         print("That is not a vaild input.")
 
 while len(selectedNumbers) < 5:
-    genNum = randint(1, 100)
+    genNum = randint(1, 40)
     if wasNumberChosen(genNum):
         continue
     else:
         selectedNumbers.append(genNum)
 
 while selectionsLeft > 0:
-    print(f"Please select your first number. You have already selected the following numbers: {printArr(userSelected)}. The are {selectedNumbersLeft} numbers still hiding. You still have {selectionsLeft} guesses left. Please select a number.")
+    print(f"Please select a number. You have already selected the these numbers: '{printArr(userSelected)}'. There are {selectedNumbersLeft} numbers still hiding. You have {selectionsLeft} guesses left.")
     while(True):
         try:
             inp = input("> ")
             num = int(inp)
-            if num < 1 or num > 100:
+            if num < 1 or num > 40:
                 print("Not in range")
                 raise ValueError()
             if wasNumberAlreadyPicked(num):
