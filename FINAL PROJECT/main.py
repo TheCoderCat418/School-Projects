@@ -1,5 +1,6 @@
 from wall import Wall
 from row  import Row
+from createMap import create
 # Y 2 X
 screen = []
 LENX = 22
@@ -24,26 +25,6 @@ def printScreen():
         print(line)
 
 addBorders()
+screen = create("yay")
 printScreen()
-
-# ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ 
-# ▧ U   D
-# ▧ W W W  
-# ▧
-# ▧
-# ▧
-# ▧
-# ▧
-# ▧
-# ▧
-# ▧
-# ▧
-# ▧
-# ▧
-# ▧
-# ▧
-# ▧
-# ▧
-# ▧
-# ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ 
 
