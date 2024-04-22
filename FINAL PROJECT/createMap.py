@@ -1,13 +1,16 @@
 import io
+import pathlib
 from door import Door
+from grid import Grid
 from row import Row
 from wall import Wall
+import sys
 from start import Start
 def create(mapName):
-    thing = io.open("C:\\Users\\herman7593\\Downloads\\MAP1.csv", "r", -1, "ASCII", None, )
-    lines = thing.readlines()
-    
-    screen = []
+    file : io.TextIOWrapper = io.open(pathlib.Path(sys.argv[0]).parent.absolute() / (mapName + ".csv"), "r", -1, "ASCII", None, None, '\n')
+    lines : list = file.readlines()
+    file.close()
+    screen = Grid()
     for i in range(len(lines)):
         screen.append(Row(len(lines[0].split(","))))
     
