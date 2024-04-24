@@ -1,6 +1,5 @@
 from createMap import create
 from os import system
-import keyboard
 import mapHolder
 from player import Player
 def printScreen(screen):
@@ -16,3 +15,5 @@ player = Player()
 mapHolder.map.replaceTile(1,1,player)
 printScreen(mapHolder.map)
 player.takeTurn()
+while(True):
+    pass

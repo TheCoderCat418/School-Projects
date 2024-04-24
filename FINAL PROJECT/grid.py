@@ -1,6 +1,5 @@
 class Grid():
     rows = {}
-
     def appendRow(self, row):
         self.rows[len(self.rows)] = row
     def getRow(self, rowNum):
