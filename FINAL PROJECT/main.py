@@ -1,19 +1,13 @@
 from createMap import create
-from os import system
 import mapHolder
 from player import Player
-def printScreen(screen):
-    system('cls')
-    for i in range(len(screen)):
-        line = ""
-        for j in range(len(screen.getRow(i))):
-            line +=screen.getRow(i).getTile(j).getChar() + " "
-        print(line)
+
 mapHolder.map = create("MAP1")
-printScreen(mapHolder.map)
+mapHolder.printScreen(mapHolder.map)
 player = Player()
-mapHolder.map.replaceTile(1,1,player)
-printScreen(mapHolder.map)
-player.takeTurn()
+player.x = 1
+player.y = 1
+player.setPlayer(1,1)
+mapHolder.printScreen(mapHolder.map)
 while(True):
-    pass
+    player.takeTurn()

@@ -1,5 +1,6 @@
 import io
 import pathlib
+import mapHolder
 from door import Door
 from grid import Grid
 from row import Row
@@ -13,7 +14,6 @@ def create(mapName):
     screen = Grid()
     for i in range(len(lines)):
         screen.appendRow(Row(len(lines[0].split(","))))
-    
     for i in range(len(lines)):
         row = screen.getRow(i)
         arr = lines[i].split(",")

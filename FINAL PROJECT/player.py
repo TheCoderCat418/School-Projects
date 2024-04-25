@@ -8,19 +8,34 @@ def runTing(self, key: keyboard.KeyboardEvent):
     if(self.tookTurn):
         return
     if(key.name == "right"):
+        self.setPlayer(self.x,self.y+1)
+        mapHolder.printScreen(mapHolder.map)
         self.tookTurn = True
-        self.setPlayer(1,1)
+    if(key.name == "left"):
+        self.setPlayer(self.x,self.y-1)
+        mapHolder.printScreen(mapHolder.map)
+        self.tookTurn = True
+    if(key.name == "up"):
+        self.setPlayer(self.x-1,self.y)
+        mapHolder.printScreen(mapHolder.map)
+        self.tookTurn = True
+    if(key.name == "down"):
+        self.setPlayer(self.x+1,self.y)
+        mapHolder.printScreen(mapHolder.map)
+        self.tookTurn = True
     return
 
 
 
 class Player(Tile):
     char = "U"
-    x = 0
-    y = 0
+    x = 1
+    y = 1
     tookTurn = False
-    takingTurn = False
+    def __init__(self):
+        super().__init__()
     def takeTurn(self):
+        self.tookTurn = False
         hook = keyboard.on_press(lambda key: runTing(self, key))
         while(not self.tookTurn):
             sleep(0.5)
@@ -31,3 +46,7 @@ class Player(Tile):
         tile = newMap.getRow(self.x).getTile(self.y)
         mapHolder.map.replaceTile(self.x,self.y,tile)
         mapHolder.map.replaceTile(x,y,self)
+        self.x = x
+        self.y = y
+        return
+
