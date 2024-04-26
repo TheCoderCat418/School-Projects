@@ -10,4 +10,4 @@ class Grid():
     def __len__(self):
         return len(self.rows)
     def replaceTile(self, x,y, newTile):
-        self.rows[x].setTile(newTile, y)
+        self.rows[y].setTile(newTile, x)

@@ -8,19 +8,27 @@ def runTing(self, key: keyboard.KeyboardEvent):
     if(self.tookTurn):
         return
     if(key.name == "right"):
-        self.setPlayer(self.x,self.y+1)
+        if(mapHolder.map.getRow(self.y).getTile(self.x+1).collides()):
+            return
+        self.setPlayer(self.x+1,self.y)
         mapHolder.printScreen(mapHolder.map)
         self.tookTurn = True
     if(key.name == "left"):
-        self.setPlayer(self.x,self.y-1)
-        mapHolder.printScreen(mapHolder.map)
-        self.tookTurn = True
-    if(key.name == "up"):
+        if(mapHolder.map.getRow(self.y).getTile(self.x-1).collides()):
+            return
         self.setPlayer(self.x-1,self.y)
         mapHolder.printScreen(mapHolder.map)
         self.tookTurn = True
+    if(key.name == "up"):
+        if(mapHolder.map.getRow(self.y-1).getTile(self.x).collides()):
+            return
+        self.setPlayer(self.x,self.y-1)
+        mapHolder.printScreen(mapHolder.map)
+        self.tookTurn = True
     if(key.name == "down"):
-        self.setPlayer(self.x+1,self.y)
+        if(mapHolder.map.getRow(self.y+1).getTile(self.x).collides()):
+            return
+        self.setPlayer(self.x,self.y+1)
         mapHolder.printScreen(mapHolder.map)
         self.tookTurn = True
     return
@@ -43,7 +51,7 @@ class Player(Tile):
         return
     def setPlayer(self, x, y):
         newMap = create(mapHolder.name)
-        tile = newMap.getRow(self.x).getTile(self.y)
+        tile = newMap.getRow(self.y).getTile(self.x)
         mapHolder.map.replaceTile(self.x,self.y,tile)
         mapHolder.map.replaceTile(x,y,self)
         self.x = x

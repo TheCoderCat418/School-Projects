@@ -5,3 +5,5 @@ class Tile:
        pass
     def getChar(self):
         return self.char
+    def collides(self):
+        return self.collide

@@ -1,5 +1,6 @@
 import io
 import pathlib
+from floor import Floor
 import mapHolder
 from door import Door
 from grid import Grid
@@ -29,4 +30,6 @@ def create(mapName):
                 row.setTile(Wall(), v)
             elif stri == "DOOR":
                 row.setTile(Door(), v)
+            elif stri == "FLOOR":
+                row.setTile(Floor(), v)
     return screen
