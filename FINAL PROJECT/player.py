@@ -37,6 +37,7 @@ def runTing(self, key: keyboard.KeyboardEvent):
 
 class Player(Tile):
     char = "U"
+    inv = dict()
     x = 1
     y = 1
     tookTurn = False
@@ -57,4 +58,6 @@ class Player(Tile):
         self.x = x
         self.y = y
         return
+    def addKey(self, code):
+        self.inv.update("key", code)
 

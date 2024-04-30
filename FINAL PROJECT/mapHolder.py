@@ -1,7 +1,7 @@
 import os
 
 map = None
-
+player = None
 
 name = "MAP1"
 
