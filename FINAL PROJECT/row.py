@@ -3,9 +3,10 @@ from tile import Tile
 
 class Row:
     def __init__(self, width):
+        
         self.arr = []
         for _ in range(width):
-            self.arr.append(Tile())
+            self.arr.append(dict())
     def getTile(self, pos):
         return self.arr[pos]
     def setTile(self, tile: Tile, pos):

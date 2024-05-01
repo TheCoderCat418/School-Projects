@@ -2,6 +2,7 @@ import io
 import pathlib
 from floor import Floor
 
+from key import Key
 import mapHolder
 from door import Door
 from grid import Grid
@@ -30,20 +31,32 @@ def create(mapName):
             if arr[v].endswith("\n"):
                 stri = arr[v].split("\n")[0]
             # OPERATOR CHECK
+
+            opDic = dict()
             spl = stri.split(":")
             obj = spl[0]
+            firstPass = True
             for i in spl:
-                pass
+                if firstPass:
+                    firstPass = False
+                    continue
+                if(i.find(";") != -1):
+                    pair = i.split(";",1)
+                    opDic.update({pair[0]: pair[1]})
+                    pass
+                
 
             match obj:
                 case "BORDER":
-                    row.setTile(Wall(), v)
+                    row.setTile(Wall(dict()), v)
                 case "START":
-                    row.setTile(Start(), v)
+                    row.setTile(Start(dict()), v)
                 case "WALL":
-                    row.setTile(Wall(), v)
+                    row.setTile(Wall(dict()), v)
                 case "DOOR":
-                    row.setTile(Door(), v)
+                    row.setTile(Door(dict()), v)
                 case "FLOOR":
-                    row.setTile(Floor(), v)
+                    row.setTile(Floor(dict()), v)
+                case "KEY":
+                    row.setTile(Key(dict()), v)
     return screen
