@@ -42,7 +42,7 @@ class Player(Tile):
     y = 1
     tookTurn = False
     def __init__(self):
-        super().__init__()
+        super().__init__(None)
     def takeTurn(self):
         self.tookTurn = False
         hook = keyboard.on_press(lambda key: runTing(self, key))
@@ -58,6 +58,14 @@ class Player(Tile):
         self.x = x
         self.y = y
         return
+    def spawnPlayer(self, map):
+        for i in range(len(map)):
+            for j in range(len(map.getRow(i))):
+                if(map.getRow(i).getTile(j).getChar().__class__ == "Player"):
+                    self.setPlayer(i,j)
+                    return self
     def addKey(self, code):
         self.inv.update("key", code)
+    def onCollide(self, object):
+        pass
 

@@ -6,3 +6,6 @@ class Wall(Tile):
     collide = True
     def __init__(self, opDic):
         super().__init__(dict())
+    
+    def onCollide(self, object):
+        pass

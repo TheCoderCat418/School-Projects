@@ -7,6 +7,7 @@ import mapHolder
 from door import Door
 from grid import Grid
 from row import Row
+from tile import Tile
 from wall import Wall
 import sys
 from start import Start
@@ -48,15 +49,17 @@ def create(mapName):
 
             match obj:
                 case "BORDER":
-                    row.setTile(Wall(dict()), v)
+                    row.setTile(Wall(opDic), v)
                 case "START":
-                    row.setTile(Start(dict()), v)
+                    row.setTile(Start(opDic), v)
                 case "WALL":
-                    row.setTile(Wall(dict()), v)
+                    row.setTile(Wall(opDic), v)
                 case "DOOR":
-                    row.setTile(Door(dict()), v)
+                    row.setTile(Door(opDic), v)
                 case "FLOOR":
-                    row.setTile(Floor(dict()), v)
+                    row.setTile(Floor(opDic), v)
                 case "KEY":
-                    row.setTile(Key(dict()), v)
+                    row.setTile(Key(opDic), v)
+                case _:
+                    row.setTile(Tile(opDic), v)
     return screen
