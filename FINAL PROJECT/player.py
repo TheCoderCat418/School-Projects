@@ -37,7 +37,7 @@ def runTing(self, key: keyboard.KeyboardEvent):
 
 class Player(Tile):
     char = "U"
-    inv = dict()
+    inv = []
     x = 1
     y = 1
     tookTurn = False
@@ -65,7 +65,7 @@ class Player(Tile):
                     self.setPlayer(i,j)
                     return self
     def addKey(self, code):
-        self.inv.update("key", code)
+        self.inv.append("key;"+code)
     def onCollide(self, object):
         pass
 

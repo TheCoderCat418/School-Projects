@@ -4,7 +4,7 @@ from abc import ABC, abstractmethod
 class Tile(ABC):
     char = ""
     collide = False
-    opdic = {}
+    opdic = dict()
     color = "inv"
     revealed = False
     def __init__(self, opDic):
