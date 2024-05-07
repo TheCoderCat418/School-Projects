@@ -1,5 +1,8 @@
 import os
 
+from hidden import Hidden
+from tile import Tile
+
 map = None
 player = None
 
@@ -10,12 +13,14 @@ def printScreen(screen):
     for i in range(len(screen)):
         line = ""
         for j in range(len(screen.getRow(i))):
-            playerColliding = False
             tile = screen.getRow(i).getTile(j)
-            for j in tile.opdic.keys():
-                if j == "reveal":
+            for x in tile.opdic.keys():
+                if x == "reveal":
+                    tile = Hidden(dict())
                     for a in player.inv:
-                        a.split(";")
+                        if a.split(";")[0] == "KEY":
+                            if tile.opdic[x] == a.split(";")[0]:
+                                tile = screen.getRow(i).getTile(j)
             line += tile.getChar() + " "
         print(line)
     return

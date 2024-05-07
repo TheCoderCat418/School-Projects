@@ -1,5 +1,6 @@
 import mapHolder
 from time import sleep
+from start import Start
 from tile import Tile
 from createMap import create
 import keyboard
@@ -42,7 +43,7 @@ class Player(Tile):
     y = 1
     tookTurn = False
     def __init__(self):
-        super().__init__(None)
+        super().__init__(dict())
     def takeTurn(self):
         self.tookTurn = False
         hook = keyboard.on_press(lambda key: runTing(self, key))
@@ -61,7 +62,9 @@ class Player(Tile):
     def spawnPlayer(self, map):
         for i in range(len(map)):
             for j in range(len(map.getRow(i))):
-                if(map.getRow(i).getTile(j).getChar().__class__ == "Player"):
+                print(map.getRow(i).getTile(j).__class__)
+                print(Start)
+                if(map.getRow(i).getTile(j).__class__ == Start):
                     self.setPlayer(i,j)
                     return self
     def addKey(self, code):
