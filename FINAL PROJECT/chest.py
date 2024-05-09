@@ -1,7 +1,7 @@
 from tile import Tile
 
 
-class Hidden(Tile):
-    char = "⍰"
+class Chest(Tile):
+    char = "?"
     def onCollide():
         pass

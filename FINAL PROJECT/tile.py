@@ -14,4 +14,7 @@ class Tile(ABC):
         return self.char
     def collides(self):
         return self.collide
+    @abstractmethod
+    def onCollide():
+        pass
     

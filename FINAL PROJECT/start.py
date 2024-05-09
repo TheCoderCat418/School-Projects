@@ -3,5 +3,5 @@ from tile import Tile
 
 class Start(Tile):
     char = "◈"
-    def onCollide(self, object):
+    def onCollide(self):
         pass

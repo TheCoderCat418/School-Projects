@@ -1,8 +1,7 @@
 import os
 
+from floor import Floor
 from hidden import Hidden
-from tile import Tile
-
 map = None
 player = None
 
@@ -16,11 +15,20 @@ def printScreen(screen):
             tile = screen.getRow(i).getTile(j)
             for x in tile.opdic.keys():
                 if x == "reveal":
-                    tile = Hidden(dict())
+                    hidden = True
                     for a in player.inv:
-                        if a.split(";")[0] == "KEY":
-                            if tile.opdic[x] == a.split(";")[0]:
-                                tile = screen.getRow(i).getTile(j)
+                        if a.split(";")[0] == "key":
+                            if tile.opdic[x] == a.split(";")[1]:
+                                hidden = False
+                    if hidden:
+                        tile = Hidden(dict())
+                if x == "destroy":
+                    for a in player.inv:
+                        if a.split(";")[0] == "key":
+                            if tile.opdic[x] == a.split(";")[1]:
+                                tile = Floor(dict())
+                if x == "is":
+                    player.addKey(tile.opdic[x])
             line += tile.getChar() + " "
         print(line)
     return
