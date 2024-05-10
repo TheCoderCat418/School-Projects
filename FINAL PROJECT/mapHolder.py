@@ -27,8 +27,6 @@ def printScreen(screen):
                         if a.split(";")[0] == "key":
                             if tile.opdic[x] == a.split(";")[1]:
                                 tile = Floor(dict())
-                if x == "is":
-                    player.addKey(tile.opdic[x])
             line += tile.getChar() + " "
         print(line)
     return

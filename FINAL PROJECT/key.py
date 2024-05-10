@@ -1,10 +1,11 @@
 from tile import Tile
-
+import mapHolder
 class Key(Tile):
     char = "⚿"
-    code = "Red"
+    code = "NUll"
     def __init__(self, opDic):
         super().__init__(opDic)
+        self.code = self.opdic["is"]
     def onCollide(self):
-        pass
+        mapHolder.player.addKey(self.code)
         
