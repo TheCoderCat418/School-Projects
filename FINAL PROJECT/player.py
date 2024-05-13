@@ -9,30 +9,42 @@ def runTing(self, key: keyboard.KeyboardEvent):
     if(self.tookTurn):
         return
     if(key.name == "right"):
+        newTile = mapHolder.map.getRow(self.y).getTile(self.x+1)
+        newTile.beforeCollide()
         if(mapHolder.map.getRow(self.y).getTile(self.x+1).collides()):
+            newTile.attemptedCollide()
             return
-        newTile = self.setPlayer(self.x+1,self.y)
+        self.setPlayer(self.x+1,self.y)
         mapHolder.printScreen(mapHolder.map)
         self.tookTurn = True
         newTile.onCollide()
     if(key.name == "left"):
+        newTile = mapHolder.map.getRow(self.y).getTile(self.x-1)
+        newTile.beforeCollide()
         if(mapHolder.map.getRow(self.y).getTile(self.x-1).collides()):
+            newTile.attemptedCollide()
             return
-        newTile = self.setPlayer(self.x-1,self.y)
+        self.setPlayer(self.x-1,self.y)
         mapHolder.printScreen(mapHolder.map)
         self.tookTurn = True
         newTile.onCollide()
     if(key.name == "up"):
+        newTile = mapHolder.map.getRow(self.y-1).getTile(self.x)
+        newTile.beforeCollide()
         if(mapHolder.map.getRow(self.y-1).getTile(self.x).collides()):
+            newTile.attemptedCollide()
             return
-        newTile = self.setPlayer(self.x,self.y-1)
+        self.setPlayer(self.x,self.y-1)
         mapHolder.printScreen(mapHolder.map)
         self.tookTurn = True
         newTile.onCollide()
     if(key.name == "down"):
+        newTile = mapHolder.map.getRow(self.y+1).getTile(self.x)
+        newTile.beforeCollide()
         if(mapHolder.map.getRow(self.y+1).getTile(self.x).collides()):
+            newTile.attemptedCollide()
             return
-        newTile = self.setPlayer(self.x,self.y+1)
+        self.setPlayer(self.x,self.y+1)
         mapHolder.printScreen(mapHolder.map)
         self.tookTurn = True
         newTile.onCollide()
@@ -73,6 +85,12 @@ class Player(Tile):
     def addKey(self, code):
         if self.inv.count("key;"+code) == 0:
             self.inv.append("key;"+code)
+    def hasKey(self,code):
+        return self.inv.count("key;"+code)
     def onCollide(self):
+        pass
+    def attemptedCollide(self):
+        pass
+    def beforeCollide(self):
         pass
 

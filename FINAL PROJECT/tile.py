@@ -15,6 +15,12 @@ class Tile(ABC):
     def collides(self):
         return self.collide
     @abstractmethod
-    def onCollide():
+    def onCollide(self):
+        pass
+    @abstractmethod
+    def beforeCollide(self):
+        pass
+    @abstractmethod
+    def attemptedCollide(self):
         pass
     

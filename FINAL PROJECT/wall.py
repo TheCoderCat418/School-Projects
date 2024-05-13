@@ -7,5 +7,9 @@ class Wall(Tile):
     def __init__(self, opDic):
         super().__init__(opDic)
     
-    def onCollide(self, object):
+    def onCollide(self):
+        pass
+    def attemptedCollide(self):
+        print("That's a wall")
+    def beforeCollide(self):
         pass
