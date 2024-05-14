@@ -4,7 +4,7 @@ from floor import Floor
 from hidden import Hidden
 map = None
 player = None
-
+id = 1
 name = "MAP1"
 
 def printScreen(screen):
@@ -21,12 +21,12 @@ def printScreen(screen):
                             if tile.opdic[x] == a.split(";")[1]:
                                 hidden = False
                     if hidden:
-                        tile = Hidden(dict())
+                        tile = Hidden(tile.opdic)
                 if x == "destroy":
                     for a in player.inv:
                         if a.split(";")[0] == "key":
                             if tile.opdic[x] == a.split(";")[1]:
-                                tile = Floor(dict())
+                                tile = Floor(tile.opdic)
             line += tile.getChar() + " "
         print(line)
     return

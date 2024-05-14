@@ -1,6 +1,7 @@
 import io
 import pathlib
 from chest import Chest
+from exit import Exit
 from floor import Floor
 
 from key import Key
@@ -64,7 +65,7 @@ def create(mapName):
                 case "CHEST":
                     row.setTile(Chest(opDic), v)
                 case "END":
-                    row.setTile(Chest(opDic), v)
+                    row.setTile(Exit(opDic), v)
                 case _:
                     row.setTile(Tile(opDic), v)
     return screen
