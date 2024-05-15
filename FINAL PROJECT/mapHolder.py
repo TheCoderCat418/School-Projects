@@ -1,7 +1,6 @@
 import os
 import pathlib
 import importlib
-from keyboard import play
 from floor import Floor
 from hidden import Hidden
 import createMap
@@ -11,9 +10,9 @@ from player import Player
 map = None
 player = None
 id = 1
-
+endGame = False
 def printScreen(screen):
-    global player, map, id, name
+    global player, map, id, endGame
     os.system("cls")
     for i in range(len(screen)):
         line = ""
@@ -38,7 +37,7 @@ def printScreen(screen):
     return
 
 def loadNextMap():
-    global player, map, id, name
+    global player, map, id, endGame
     os.system("cls")
     if (pathlib.Path(sys.argv[0]).parent.absolute() / f"MAP{str(id+1)}.csv").exists():
         print("Loading next map")
@@ -49,7 +48,6 @@ def loadNextMap():
         printScreen(map)
         turn.gameStarted = True
         return
-    main = importlib.import_module("main")
-    main.endGame = True
+    endGame = True
     print("Thanks for playing!")   
     sys.exit(0)
