@@ -1,6 +1,5 @@
 import os
 import pathlib
-import importlib
 from floor import Floor
 from hidden import Hidden
 import createMap
