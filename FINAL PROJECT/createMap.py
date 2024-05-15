@@ -5,7 +5,6 @@ from exit import Exit
 from floor import Floor
 
 from key import Key
-import mapHolder
 from door import Door
 from grid import Grid
 from row import Row

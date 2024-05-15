@@ -8,6 +8,7 @@ import keyboard
 def runTing(self, key: keyboard.KeyboardEvent):
     if(self.tookTurn):
         return
+
     if(key.name == "right"):
         newTile = mapHolder.map.getRow(self.y).getTile(self.x+1)
         newTile.beforeCollide()
@@ -68,7 +69,7 @@ class Player(Tile):
         keyboard.unhook(hook)
         return
     def setPlayer(self, x, y):
-        newMap = create(mapHolder.name)
+        newMap = create(f"MAP{str(mapHolder.id)}")
         oldTile = newMap.getRow(self.y).getTile(self.x)
         newTile = newMap.getRow(y).getTile(x)
         mapHolder.map.replaceTile(self.x,self.y,oldTile)

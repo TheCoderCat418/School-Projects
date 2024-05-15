@@ -1,5 +1,5 @@
 from tile import Tile
-import mapHolder
+import importlib
 class Key(Tile):
     char = "⚿"
     code = "NUll"
@@ -11,5 +11,6 @@ class Key(Tile):
     def attemptedCollide(self):
         pass
     def beforeCollide(self):
+        mapHolder = importlib.import_module("mapHolder")
         mapHolder.player.addKey(self.code)
         

@@ -1,5 +1,5 @@
 from tile import Tile
-import mapHolder
+import importlib
 
 class Door(Tile):
     char = "D"
@@ -24,6 +24,7 @@ class Door(Tile):
         if self.collide:
             print("The door is locked!")
     def beforeCollide(self):
+        mapHolder = importlib.import_module("mapHolder")
         if self.hasIs:
             mapHolder.player.addKey(self.code)
         if self.collide:

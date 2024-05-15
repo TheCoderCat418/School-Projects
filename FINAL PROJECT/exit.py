@@ -1,17 +1,12 @@
-import pathlib
-import sys
 from tile import Tile
-import mapHolder
-import os
+import importlib
+import turn
 class Exit(Tile):
     char = "⌦"
     def onCollide(self):
-        if (pathlib.Path(sys.argv[0]).parent.absolute() / f"MAP{str(mapHolder.id+1)}.csv").exists():
-            print("Loading next map")
-            return
-        
-        
+        mapHolder = importlib.import_module("mapHolder")
+        mapHolder.loadNextMap()  
     def attemptedCollide(self):
         pass
     def beforeCollide(self):
-        pass
+        turn.gameStarted = False
