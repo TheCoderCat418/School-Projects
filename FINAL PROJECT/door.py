@@ -19,14 +19,14 @@ class Door(Tile):
         if self.collide:
             self.key = self.opdic["open"]
     def onCollide(self):
-        pass
+        mapHolder = importlib.import_module("mapHolder")
+        if self.hasIs:
+            mapHolder.player.addKey(self.code)
     def attemptedCollide(self):
         if self.collide:
             print("The door is locked!")
     def beforeCollide(self):
         mapHolder = importlib.import_module("mapHolder")
-        if self.hasIs:
-            mapHolder.player.addKey(self.code)
         if self.collide:
             if mapHolder.player.hasKey(self.key) == 1:
                 self.collide = False
